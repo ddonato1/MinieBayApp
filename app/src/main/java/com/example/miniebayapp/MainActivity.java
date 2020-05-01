@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     EditText username;;
     EditText userpass;
     Button btnlogin;
+    Button btnregister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         username = findViewById(R.id.userNameText);
         userpass = findViewById(R.id.userPassText);
         btnlogin = findViewById(R.id.loginButton);
+        btnregister = findViewById(R.id.registerButton);
 
        // btnlogin.setOnClickListener(){
             //Intent i = new Intent(MainActivity.this, welcomePage.class);
@@ -34,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
                 loginBtnObject();
             }
         });
+
+        btnregister.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                registerBtnObject();
+            }
+        });
     }
 
     public void loginBtnObject() {
@@ -42,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
         String userN = username.getText().toString();
         String passwrd = userpass.getText().toString();
 
+        i.putExtra("userName", userN);
+        startActivity(i);
+    }
+
+    public void registerBtnObject() {
+        Intent i = new Intent(MainActivity.this, RegisterPageActivity.class);
         startActivity(i);
     }
 

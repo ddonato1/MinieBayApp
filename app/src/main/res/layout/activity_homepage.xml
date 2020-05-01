@@ -36,7 +36,7 @@
     ]]>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/usernameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -58,22 +58,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </SearchView>
-
-    <ScrollView
-        android:id="@+id/scrollView3"
-        android:layout_width="351dp"
-        android:layout_height="462dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
 
     <Button
         android:id="@+id/homeButton"
@@ -104,8 +88,8 @@
         android:id="@+id/notifButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
         android:background="#FFFFFF"
         android:text="Notifications"
         android:textAllCaps="false"
@@ -124,7 +108,7 @@
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/notifButton"
         app:layout_constraintTop_toBottomOf="@+id/scrollView3"
         app:layout_constraintVertical_bias="1.0" />
@@ -133,12 +117,29 @@
         android:id="@+id/shopitemButton"
         android:layout_width="31dp"
         android:layout_height="29dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:background="#FFFFFF"
         android:foreground="@drawable/shoppingcart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.942"
+        app:layout_constraintHorizontal_bias="0.984"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="399dp"
+        android:layout_height="518dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
