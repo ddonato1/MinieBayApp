@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.View;
+import android.widget.TextView;
+
 
 public class MainActivity extends AppCompatActivity {
     EditText username;;
     EditText userpass;
     Button btnlogin;
-    Button btnregister;
+    TextView register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +24,7 @@ public class MainActivity extends AppCompatActivity {
         username = findViewById(R.id.userNameText);
         userpass = findViewById(R.id.userPassText);
         btnlogin = findViewById(R.id.loginButton);
-        btnregister = findViewById(R.id.registerButton);
-
-       // btnlogin.setOnClickListener(){
-            //Intent i = new Intent(MainActivity.this, welcomePage.class);
-            //startActivities(i);
-       // };
-
+        register = findViewById(R.id.registerTxtView);
 
         btnlogin.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -37,10 +33,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnregister.setOnClickListener(new View.OnClickListener(){
+       register.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                registerBtnObject();
+                Intent ireg = new Intent(MainActivity.this, RegisterPageActivity.class);
+                startActivity(ireg);
             }
         });
     }
@@ -52,11 +49,6 @@ public class MainActivity extends AppCompatActivity {
         String passwrd = userpass.getText().toString();
 
         i.putExtra("userName", userN);
-        startActivity(i);
-    }
-
-    public void registerBtnObject() {
-        Intent i = new Intent(MainActivity.this, RegisterPageActivity.class);
         startActivity(i);
     }
 
