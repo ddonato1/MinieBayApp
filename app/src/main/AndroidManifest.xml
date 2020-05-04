@@ -13,12 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ShoppingCartPage"></activity>
-        <activity android:name=".SellingPage" />
-        <activity android:name=".NotificationPage" />
-        <activity android:name=".MyebayInfo" />
-        <activity android:name=".RegisterPage" />
-        <activity android:name=".HomePage" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".HomePage" />
+        <activity android:name=".RegisterPage" />
+        <activity android:name=".ChangePasswordPage"></activity>
+        <activity android:name=".ShoppingCartPage" />
+        <activity android:name=".SellingPage" />
+        <activity android:name=".NotificationPage" />
+        <activity android:name=".MyebayInfo" />
     </application>
 
 </manifest>

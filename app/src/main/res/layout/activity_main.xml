@@ -49,11 +49,40 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/rememberCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:paddingLeft="2dp"
+            android:layout_marginTop="14dp"
+            android:text="Remember me"
+            android:textColor="#065E56"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/forgotPassTxtView"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:paddingLeft="75dp"
+            android:layout_marginTop="14dp"
+            android:paddingTop="3dp"
+            android:text="@string/forgot_my_password"
+            android:textColor="#065E56"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         android:background="#FB94DAD3"
         android:text="Login"
         android:ems="10"
@@ -69,6 +98,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="35dp"
+            android:layout_marginTop="14dp"
             android:textStyle="bold"
             android:text="@string/notregistered"/>
 
@@ -76,11 +106,15 @@
             android:id="@+id/registerTxtView"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
+            android:layout_marginTop="14dp"
             android:paddingLeft="10dp"
             android:text="@string/register"
-            android:textColor="#04ea00"
+            android:textColor="#06BA03"
             android:textSize="14sp"
             android:textStyle="bold" />
+
+
     </LinearLayout>
+
 
 </LinearLayout>

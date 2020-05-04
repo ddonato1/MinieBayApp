@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.view.View;
 import android.widget.TextView;
@@ -15,14 +16,14 @@ public class MainActivity extends AppCompatActivity {
     EditText userpass;
     Button btnlogin;
     TextView register;
+    CheckBox remembox;
+    TextView forgotPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        username = findViewById(R.id.userNameText);
-        userpass = findViewById(R.id.userPassText);
         btnlogin = (Button) findViewById(R.id.loginButton);
         register = (TextView) findViewById(R.id.registerTxtView);
 
@@ -42,15 +43,36 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(ireg);
             }
         });
+
+       forgotPass.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent iFP = new Intent(MainActivity.this, ChangePasswordPage.class);
+               startActivity(iFP);
+           }
+       });
     }
 
     public void loginBtnObject() {
+        username = (EditText) findViewById(R.id.userNameText);
+        userpass = (EditText) findViewById(R.id.userPassText);
+
         Intent i = new Intent(MainActivity.this, HomePage.class);
         String userN = username.getText().toString();
 //        //String passwrd = userpass.getText().toString();
 //
         i.putExtra("userName", userN);
         startActivity(i);
+    }
+
+    /**
+     * If the user click the check box of "remember me", the user will stay login in the application until
+     * he/she decide to logout from the application.
+     */
+    public void rememberCheckBoxObject(){
+        remembox = (CheckBox) findViewById(R.id.rememberCheck);
+
+
     }
 
 }
