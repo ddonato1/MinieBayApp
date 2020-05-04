@@ -2,16 +2,61 @@ package com.example.miniebayapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MyeBayInfoActivity extends AppCompatActivity {
+    TextView usern;
+    String username;
+    Button homeBtn;
+    Button myEBAYbtn;
+    Button notBtn;
+    Button saleBtn;
+    Button cartBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.);
+        setContentView(R.layout.activity_myebayinfo);
 
+
+        homeBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                homeBtnObject();
+            }
+        });
+
+        myEBAYbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myEBAYBtnObject();
+            }
+        });
+
+        notBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                notiBtnObject();
+            }
+        });
+
+        saleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saleBtnObject();
+            }
+        });
+
+        cartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shoppingcartBtnObject();
+            }
+        });
     }
 
     public void homeBtnObject() {
