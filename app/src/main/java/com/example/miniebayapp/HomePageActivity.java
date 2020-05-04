@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.widget.Button;
 import android.widget.TextView;
 import android.app.Activity;
 import java.io.InputStream;
@@ -32,6 +33,11 @@ import java.util.List;
 public class HomePageActivity extends AppCompatActivity {
     TextView usern;
     String username;
+    Button homeBtn;
+    Button myEBAYbtn;
+    Button notBtn;
+    Button saleBtn;
+    Button cartBtn;
 
     //This is for debugging
     private String TAG = HomePageActivity.class.getSimpleName();
@@ -69,6 +75,41 @@ public class HomePageActivity extends AppCompatActivity {
 
         // Create and start the thread
         new GetItems(this).execute();
+
+        homeBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                homeBtnObject();
+            }
+        });
+
+        myEBAYbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myEBAYBtnObject();
+            }
+        });
+
+        notBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                notiBtnObject();
+            }
+        });
+
+        saleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saleBtnObject();
+            }
+        });
+
+        cartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shoppingcartBtnObject();
+            }
+        });
     }
 
     /***
@@ -286,5 +327,33 @@ public class HomePageActivity extends AppCompatActivity {
             this.price = price;
             this.image = image;
         }
+    }
+
+    /**
+     *
+     */
+    public void homeBtnObject() {
+        Intent i = new Intent(HomePageActivity.this, HomePageActivity.class);
+        startActivity(i);
+    }
+
+    public void myEBAYBtnObject() {
+        Intent i = new Intent(HomePageActivity.this, MyeBayInfoActivity.class);
+        startActivity(i);
+    }
+
+    public void notiBtnObject() {
+        Intent i = new Intent(HomePageActivity.this, NotificationsAct.class);
+        startActivity(i);
+    }
+
+    public void saleBtnObject() {
+        Intent i = new Intent(HomePageActivity.this, SellingActivity.class);
+        startActivity(i);
+    }
+
+    public void shoppingcartBtnObject() {
+        Intent i = new Intent(HomePageActivity.this, ShoppingCartActivity.class);
+        startActivity(i);
     }
 }

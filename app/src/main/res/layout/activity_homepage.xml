@@ -16,6 +16,7 @@
         android:layout_marginTop="16dp"
         android:text="username"
         android:textSize="18sp"
+        android:textColor="#009688"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -111,23 +112,24 @@
         app:layout_constraintTop_toBottomOf="@+id/searchView"
         app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical" >-->
 
-            <ListView
-                android:id="@+id/itemLists"
-                android:layout_width="match_parent"
-                android:layout_height="410dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+<!--            <ListView-->
+<!--                android:id="@+id/itemLists"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="410dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <ImageView
                     android:layout_height="75dp"
                     android:layout_width="116dp"
@@ -158,7 +160,7 @@
                     android:layout_alignLeft="@+id/itemName" />
             </RelativeLayout>
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
