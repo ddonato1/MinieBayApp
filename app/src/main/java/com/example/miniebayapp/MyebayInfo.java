@@ -1,16 +1,20 @@
 package com.example.miniebayapp;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class MyeBayInfoActivity extends AppCompatActivity {
+public class MyebayInfo extends AppCompatActivity {
     TextView usern;
+    TextView firstn;
+    TextView lastn;
     String username;
+    String firstname;
+    String lastname;
     Button homeBtn;
     Button myEBAYbtn;
     Button notBtn;
@@ -20,8 +24,19 @@ public class MyeBayInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_myebayinfo);
+        setContentView(R.layout.activity_myebay_info);
 
+        Intent i = getIntent();
+        username = i.getStringExtra("userName");
+        firstname = i.getStringExtra("first name");
+        lastname = i.getStringExtra("last name");
+
+        usern = findViewById(R.id.usernameView);
+        usern.setText("" + username);
+        firstn = findViewById(R.id.fisrtNameView);
+        firstn.setText("" + firstname);
+        lastn = findViewById(R.id.lastNameView);
+        lastn.setText("" + lastname);
 
         homeBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -60,27 +75,27 @@ public class MyeBayInfoActivity extends AppCompatActivity {
     }
 
     public void homeBtnObject() {
-        Intent i = new Intent(MyeBayInfoActivity.this, HomePageActivity.class);
+        Intent i = new Intent(MyebayInfo.this, HomePage.class);
         startActivity(i);
     }
 
     public void myEBAYBtnObject() {
-        Intent i = new Intent(MyeBayInfoActivity.this, MyeBayInfoActivity.class);
+        Intent i = new Intent(MyebayInfo.this, MyebayInfo.class);
         startActivity(i);
     }
 
     public void notiBtnObject() {
-        Intent i = new Intent(MyeBayInfoActivity.this, NotificationsAct.class);
+        Intent i = new Intent(MyebayInfo.this, NotificationPage.class);
         startActivity(i);
     }
 
     public void saleBtnObject() {
-        Intent i = new Intent(MyeBayInfoActivity.this, SellingActivity.class);
+        Intent i = new Intent(MyebayInfo.this, SellingPage.class);
         startActivity(i);
     }
 
     public void shoppingcartBtnObject() {
-        Intent i = new Intent(MyeBayInfoActivity.this, ShoppingCartActivity.class);
+        Intent i = new Intent(MyebayInfo.this, ShoppingCartPage.class);
         startActivity(i);
     }
 }

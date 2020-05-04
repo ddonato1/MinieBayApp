@@ -1,8 +1,9 @@
 package com.example.miniebayapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
+
 import android.os.Bundle;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.TextView;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class HomePageActivity extends AppCompatActivity {
+public class HomePage extends AppCompatActivity {
     TextView usern;
     String username;
     Button homeBtn;
@@ -39,8 +40,8 @@ public class HomePageActivity extends AppCompatActivity {
     Button saleBtn;
     Button cartBtn;
 
-    //This is for debugging
-    private String TAG = HomePageActivity.class.getSimpleName();
+        //This is for debugging
+    private String TAG = HomePage.class.getSimpleName();
     //This is for managing the listview in the activity
     private ListView listv;
     //Web server's IP address
@@ -53,7 +54,7 @@ public class HomePageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homepage);
+        setContentView(R.layout.activity_home_page);
 
         Intent i = getIntent();
         username = i.getStringExtra("userName");
@@ -137,7 +138,7 @@ public class HomePageActivity extends AppCompatActivity {
          */
         protected void onPreExecute() {
             super.onPreExecute();
-            Toast.makeText(HomePageActivity.this, "Items list is downloading", Toast.LENGTH_LONG).show();
+            Toast.makeText(HomePage.this, "Items list is downloading", Toast.LENGTH_LONG).show();
         }
 
         /***
@@ -273,7 +274,7 @@ public class HomePageActivity extends AppCompatActivity {
             userItem user = getItem(position);
             // Check if an existing view is being reused, otherwise inflate the view
             if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_homepage, parent, false);
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_home_page, parent, false);
             }
             // Lookup view for data population
             TextView itemName = (TextView) convertView.findViewById(R.id.itemName);
@@ -333,27 +334,28 @@ public class HomePageActivity extends AppCompatActivity {
      *
      */
     public void homeBtnObject() {
-        Intent i = new Intent(HomePageActivity.this, HomePageActivity.class);
+        Intent i = new Intent(HomePage.this, HomePage.class);
         startActivity(i);
     }
 
     public void myEBAYBtnObject() {
-        Intent i = new Intent(HomePageActivity.this, MyeBayInfoActivity.class);
+        Intent i = new Intent(HomePage.this, MyebayInfo.class);
         startActivity(i);
     }
 
     public void notiBtnObject() {
-        Intent i = new Intent(HomePageActivity.this, NotificationsAct.class);
+        Intent i = new Intent(HomePage.this, NotificationPage.class);
         startActivity(i);
     }
 
     public void saleBtnObject() {
-        Intent i = new Intent(HomePageActivity.this, SellingActivity.class);
+        Intent i = new Intent(HomePage.this, SellingPage.class);
         startActivity(i);
     }
 
     public void shoppingcartBtnObject() {
-        Intent i = new Intent(HomePageActivity.this, ShoppingCartActivity.class);
+        Intent i = new Intent(HomePage.this, ShoppingCartPage.class);
         startActivity(i);
     }
+
 }

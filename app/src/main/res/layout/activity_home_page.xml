@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomePageActivity">
+    tools:context=".HomePage">
 
     <TextView
         android:id="@+id/usernameView"
@@ -112,55 +112,55 @@
         app:layout_constraintTop_toBottomOf="@+id/searchView"
         app:layout_constraintVertical_bias="0.0">
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical" >-->
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:orientation="vertical" >-->
 
-<!--            <ListView-->
-<!--                android:id="@+id/itemLists"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="410dp"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
+        <!--            <ListView-->
+        <!--                android:id="@+id/itemLists"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="410dp"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toTopOf="parent" />-->
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-                <ImageView
-                    android:layout_height="75dp"
-                    android:layout_width="116dp"
-                    android:padding="10dp"
-                    android:contentDescription="@string/app_name"
-                    android:layout_alignParentTop="true"
-                    android:id="@+id/imageView"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="16dp" />
+            <ImageView
+                android:layout_height="75dp"
+                android:layout_width="116dp"
+                android:padding="10dp"
+                android:contentDescription="@string/app_name"
+                android:layout_alignParentTop="true"
+                android:id="@+id/imageView"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp" />
 
-                <TextView
-                    android:layout_height="33dp"
-                    android:layout_width="172dp"
-                    android:layout_alignParentTop="true"
-                    android:id="@+id/itemName"
-                    android:text="TextView"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="185dp"
-                    android:layout_alignParentRight="true" />
+            <TextView
+                android:layout_height="33dp"
+                android:layout_width="172dp"
+                android:layout_alignParentTop="true"
+                android:id="@+id/itemName"
+                android:text="TextView"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="185dp"
+                android:layout_alignParentRight="true" />
 
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:id="@+id/itemPrice"
-                    android:text="TextView"
-                    android:layout_marginTop="57dp"
-                    android:layout_alignLeft="@+id/itemName" />
-            </RelativeLayout>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_alignParentTop="true"
+                android:id="@+id/itemPrice"
+                android:text="TextView"
+                android:layout_marginTop="57dp"
+                android:layout_alignLeft="@+id/itemName" />
+        </RelativeLayout>
 
-<!--        </LinearLayout>-->
+        <!--        </LinearLayout>-->
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

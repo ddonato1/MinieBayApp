@@ -23,31 +23,32 @@ public class MainActivity extends AppCompatActivity {
 
         username = findViewById(R.id.userNameText);
         userpass = findViewById(R.id.userPassText);
-        btnlogin = findViewById(R.id.loginButton);
-        register = findViewById(R.id.registerTxtView);
+        btnlogin = (Button) findViewById(R.id.loginButton);
+        register = (TextView) findViewById(R.id.registerTxtView);
 
         btnlogin.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 loginBtnObject();
+//                Intent iLOG = new Intent(MainActivity.this, HomePageActivity.class);
+//                startActivity(iLOG);
             }
         });
 
        register.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent ireg = new Intent(MainActivity.this, RegisterPageActivity.class);
+                Intent ireg = new Intent(MainActivity.this, RegisterPage.class);
                 startActivity(ireg);
             }
         });
     }
 
     public void loginBtnObject() {
-        Intent i = new Intent(MainActivity.this, HomePageActivity.class);
-
+        Intent i = new Intent(MainActivity.this, HomePage.class);
         String userN = username.getText().toString();
-        String passwrd = userpass.getText().toString();
-
+//        //String passwrd = userpass.getText().toString();
+//
         i.putExtra("userName", userN);
         startActivity(i);
     }
