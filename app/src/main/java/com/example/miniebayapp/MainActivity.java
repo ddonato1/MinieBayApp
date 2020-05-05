@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnlogin = (Button) findViewById(R.id.loginButton);
         register = (TextView) findViewById(R.id.registerTxtView);
+        forgotPass = (TextView) findViewById(R.id.forgotPassTxtView);
 
         btnlogin.setOnClickListener(new View.OnClickListener(){
             @Override

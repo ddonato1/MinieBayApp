@@ -15,16 +15,31 @@ public class MyebayInfo extends AppCompatActivity {
     String username;
     String firstname;
     String lastname;
+
+    //main buttons of the app
     Button homeBtn;
     Button myEBAYbtn;
     Button notBtn;
     Button saleBtn;
     Button cartBtn;
 
+    //changing to another activity variables
+    Button orders;
+    Button purchases;
+    Button help;
+    Button payment;
+    Button bidsO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myebay_info);
+
+        homeBtn = (Button) findViewById(R.id.homeButton);
+        myEBAYbtn = (Button) findViewById(R.id.userinfButton);
+        notBtn = (Button) findViewById(R.id.notifButton);
+        saleBtn = (Button) findViewById(R.id.saleButton);
+        cartBtn = (Button) findViewById(R.id.shopitemButton);
 
         Intent i = getIntent();
         username = i.getStringExtra("userName");

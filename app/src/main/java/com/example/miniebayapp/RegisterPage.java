@@ -24,6 +24,8 @@ public class RegisterPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_page);
 
+        btnconfirm = (Button) findViewById(R.id.registerButton);
+
         Intent i = getIntent();
 
         uname = findViewById(R.id.usernameText);
@@ -36,29 +38,29 @@ public class RegisterPage extends AppCompatActivity {
         btnconfirm.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //sendUserDataObject();
+                sendUserDataObject();
                 Intent iconf = new Intent(RegisterPage.this, MainActivity.class);
                 startActivity(iconf);
             }
         });
 
-        //    public void sendUserDataObject() {
-//        Intent i = new Intent(RegisterPageActivity.this, MyeBayInfoActivity.class);
-//
-//        String userN = uname.getText().toString();
-//        String firstname = fname.getText().toString();
-//        String lastname = lname.getText().toString();
-//        String dob = datebirth.getText().toString();
-//        String add = address.getText().toString();
-//        String email = e_mail.getText().toString();
-//
-//        i.putExtra("username", userN);
-//        i.putExtra("first name", firstname);
-//        i.putExtra("last name", lastname);
-//        i.putExtra("birth", dob);
-//        i.putExtra("address", add);
-//        i.putExtra("email", email);
-//        startActivity(i);
-//    }
+
+    }
+
+    public void sendUserDataObject() {
+        Intent i = new Intent(RegisterPage.this, MyebayInfo.class);
+
+        String userN = uname.getText().toString();
+        String firstname = fname.getText().toString();
+        String lastname = lname.getText().toString();
+        String add = address.getText().toString();
+        String email = e_mail.getText().toString();
+
+        i.putExtra("username", userN);
+        i.putExtra("first name", firstname);
+        i.putExtra("last name", lastname);
+        i.putExtra("address", add);
+        i.putExtra("email", email);
+        startActivity(i);
     }
 }
