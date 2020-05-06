@@ -4,6 +4,7 @@
     package="com.example.miniebayapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".SettingsPage"></activity>
+        <activity android:name=".HelpPage" />
+        <activity android:name=".PaymentMethodPage" />
+        <activity android:name=".PurchasesPage" />
+        <activity android:name=".BidsOffersPage" />
+        <activity android:name=".MyOrdersPage" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,8 +29,10 @@
         </activity>
         <activity android:name=".HomePage" />
         <activity android:name=".RegisterPage" />
-        <activity android:name=".ChangePasswordPage"></activity>
-        <activity android:name=".ShoppingCartPage" />
+        <activity android:name=".ChangePasswordPage" />
+        <activity
+            android:name=".ShoppingCartPage"
+            android:parentActivityName=".HomePage" />
         <activity android:name=".SellingPage" />
         <activity android:name=".NotificationPage" />
         <activity android:name=".MyebayInfo" />

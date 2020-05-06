@@ -29,6 +29,7 @@ public class MyebayInfo extends AppCompatActivity {
     Button help;
     Button payment;
     Button bidsO;
+    Button settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,13 @@ public class MyebayInfo extends AppCompatActivity {
         notBtn = (Button) findViewById(R.id.notifButton);
         saleBtn = (Button) findViewById(R.id.saleButton);
         cartBtn = (Button) findViewById(R.id.shopitemButton);
+
+        orders = (Button) findViewById(R.id.yourOrdersBtn);
+        bidsO = (Button) findViewById(R.id.bidsBtn);
+        purchases = (Button) findViewById(R.id.purchasesBtn);
+        payment = (Button) findViewById(R.id.paymentBtn);
+        help = (Button) findViewById(R.id.helpBtn);
+        settings = (Button) findViewById(R.id.settingsBtn);
 
         Intent i = getIntent();
         username = i.getStringExtra("userName");
@@ -87,6 +95,48 @@ public class MyebayInfo extends AppCompatActivity {
                 shoppingcartBtnObject();
             }
         });
+
+        orders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myOrdersBtnObject();
+            }
+        });
+
+        bidsO.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bidsandoffersBtnObject();
+            }
+        });
+
+        purchases.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                purchasesBtnObject();
+            }
+        });
+
+        payment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                paymentBtnObject();
+            }
+        });
+
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                helpBtnObject();
+            }
+        });
+
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                settingsBtnObject();
+            }
+        });
     }
 
     public void homeBtnObject() {
@@ -111,6 +161,36 @@ public class MyebayInfo extends AppCompatActivity {
 
     public void shoppingcartBtnObject() {
         Intent i = new Intent(MyebayInfo.this, ShoppingCartPage.class);
+        startActivity(i);
+    }
+
+    public void myOrdersBtnObject() {
+        Intent i = new Intent(MyebayInfo.this, MyOrdersPage.class);
+        startActivity(i);
+    }
+
+    public void bidsandoffersBtnObject() {
+        Intent i = new Intent(MyebayInfo.this, BidsOffersPage.class);
+        startActivity(i);
+    }
+
+    public void purchasesBtnObject() {
+        Intent i = new Intent(MyebayInfo.this, PurchasesPage.class);
+        startActivity(i);
+    }
+
+    public void paymentBtnObject() {
+        Intent i = new Intent(MyebayInfo.this, PaymentMethodPage.class);
+        startActivity(i);
+    }
+
+    public void helpBtnObject() {
+        Intent i = new Intent(MyebayInfo.this, HelpPage.class);
+        startActivity(i);
+    }
+
+    public void settingsBtnObject() {
+        Intent i = new Intent(MyebayInfo.this, SettingsPage.class);
         startActivity(i);
     }
 }

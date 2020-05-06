@@ -280,7 +280,7 @@ public class HomePage extends AppCompatActivity {
 //            userItem user = getItem(position);
 //            // Check if an existing view is being reused, otherwise inflate the view
 //            if (convertView == null) {
-//                convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_home_page, parent, false);
+//                convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_shopping_cart_page, parent, false);
 //            }
 //            // Lookup view for data population
 //            TextView itemName = (TextView) convertView.findViewById(R.id.itemName);
