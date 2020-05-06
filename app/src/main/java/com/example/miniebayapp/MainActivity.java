@@ -3,14 +3,11 @@ package com.example.miniebayapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.view.View;
 import android.widget.TextView;
@@ -18,15 +15,26 @@ import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
+    //Activity context
+    public Activity activity;
+
+    //Host address
+    protected String hostAddress="192.168.0.11:8088";
+    //Shared object though the application
+    SharedPreferences pref;
+    //Authentication Servlet name
+    protected String servletName = "sessionServlet";
+    //Intent for calling another activity
+    Intent i;
+
+    String userName;
+    String passwd;
+
     EditText username;;
     EditText userpass;
     Button btnlogin;
     TextView register;
-    CheckBox remembox;
     TextView forgotPass;
-
-    //Host address
-    protected String hostAddress="192.168.0.11:8088";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +50,41 @@ public class MainActivity extends AppCompatActivity {
         forgotPass = (TextView) findViewById(R.id.forgotPassTxtView);
 
         btnlogin.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                loginBtnObject();
-            }
-        });
+                @Override
+                public void onClick(View v){
+                   Intent i = new Intent(MainActivity.this, HomePage.class);
+                   startActivity(i);
+                }
+            });
+
+//        //Create local session variables
+//        pref = getSharedPreferences("home_page",MODE_PRIVATE);
+//        i = new Intent(MainActivity.this, HomePage.class);
+
+//        //Verify for session variables
+//        if(pref.contains("username") && pref.contains("password") && pref.contains("sessionValue")) {
+//            //The user has log to the application
+//            userName = pref.getString("username", null);
+//            passwd = pref.getString("password", null);
+//
+//            //Authenticate credentials
+//            new GetItems(MainActivity.this).execute();
+//        }
+//        else {
+//            //The user has not been authenticated
+//            btnlogin.setOnClickListener(new View.OnClickListener(){
+//                @Override
+//                public void onClick(View v){
+//                    userName = username.getText().toString();
+//                    passwd = userpass.getText().toString();
+//
+//                    //Authenticate the user via webservices
+//                    new GetItems(MainActivity.this).execute();
+//                }
+//            });
+//        }
+
+
 
        register.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -65,114 +103,102 @@ public class MainActivity extends AppCompatActivity {
        });
     }
 
-    public void loginBtnObject() {
-        String userN = username.getText().toString();
-        String passwrd = userpass.getText().toString();
-
-//        if(userN.equals("deyaneiradc21") && passwrd.equals("1234deya")){
-//            Intent i = new Intent(MainActivity.this, HomePage.class);
-//            i.putExtra("userName", userN);
-//            startActivity(i);
+//    /**
+//     *  This class define a thread for networks transactions
+//     */
+//    private class GetItems extends AsyncTask<Void, Void, Void> {
+//
+//        // Context: every transaction in a Android application must be attached to a context
+//        private Activity activity;
+//
+//        //Server response
+//        private String serverResponse;
+//
+//        private String url;
+//
+//        /***
+//         * Special constructor: assigns the context to the thread
+//         *
+//         * @param activity: Context
+//         */
+//        //@Override
+//        protected GetItems(Activity activity)
+//        {
+//            //Define the servlet URL
+//            url = "http://" + hostAddress +"/"+ servletName;
+//            this.activity = activity;
 //        }
-//        else {
-//            Toast.makeText(getApplicationContext(),"Invalid usarname or password", Toast.LENGTH_SHORT).show();
+//
+//        /**
+//         *  on PreExecute method: runs after the constructor is called and before the thread runs
+//         */
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            Toast.makeText(MainActivity.this, "Authenticating..." + url, Toast.LENGTH_LONG).show();
 //        }
-    }
-
-    /**
-     * If the user click the check box of "remember me", the user will stay login in the application until
-     * he/she decide to logout from the application.
-     */
-    public void rememberCheckBoxObject(){
-        remembox = (CheckBox) findViewById(R.id.rememberCheck);
-
-
-    }
-
-    /**
-     *  This class define a thread for networks transactions
-     */
-    private class GetItems extends AsyncTask<Void, Void, Void> {
-
-        // Context: every transaction in a Android application must be attached to a context
-        private Activity activity;
-
-        //Server response
-        private String serverResponse;
-
-        private String url;
-
-        /***
-         * Special constructor: assigns the context to the thread
-         *
-         * @param activity: Context
-         */
-        //@Override
-        protected GetItems(Activity activity)
-        {
-            //Define the servlet URL
-            url = "http://" + hostAddress;
-            this.activity = activity;
-        }
-
-        /**
-         *  on PreExecute method: runs after the constructor is called and before the thread runs
-         */
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Toast.makeText(MainActivity.this, "Authenticating..." + url, Toast.LENGTH_LONG).show();
-        }
-
-        /***
-         *  Main thread
-         * @param arg0
-         * @return
-         */
-        protected Void doInBackground(Void... arg0) {
-
-            //Read GUI inputs
-            String userName, passWord;
-            userName = ((EditText) findViewById(R.id.usernameText)).getText().toString();
-            passWord = ((EditText) findViewById(R.id.userPassText)).getText().toString();
-
-            //Define a HttpHandler
-            HttpHandler handler = new HttpHandler();
-
-            //perform the authentication process and capture the result in serverResponse variable
-            serverResponse = handler.makeServiceCallPost(url, userName, passWord);
-
-            return null;
-        }
-
-
-        /***
-         *  This method verify the authentication result
-         *  If authenticated, it creates an jsonPerson Object and open an authenticatedActivity
-         *  otherwise, it shows a error message
-         * @param result
-         */
-        protected void onPostExecute (Void result){
-            String msgToast;
-
-            //Verify the authentication result
-            // not: the user could not be authenticated
-            if (serverResponse.trim().compareTo("not")==0) {
-                msgToast= "Wrong user or password";
-                Toast.makeText(getApplicationContext(),
-                        msgToast,
-                        Toast.LENGTH_LONG).show();
-            } else {
-                //Define a jsonPerson object using the http response
-                jsonPerson jPerson = new jsonPerson(serverResponse);
-                //Create an intent in order to call the other activity
-                Intent i = new Intent(MainActivity.this, HomePage.class);
-
-                //Add parameters such as objects
-                i.putExtra("jPerson", jPerson);
-
-                //Start the other activity
-                startActivity(i);
-            }
-        }
-    }
+//
+//        /***
+//         *  Main thread
+//         * @param arg0
+//         * @return
+//         */
+//        protected Void doInBackground(Void... arg0) {
+//
+//            //Read GUI inputs
+//            String userName, passWord;
+//            userName = ((EditText) findViewById(R.id.usernameText)).getText().toString();
+//            passWord = ((EditText) findViewById(R.id.userPassText)).getText().toString();
+//
+//            //Define a HttpHandler
+//            HttpHandler handler = new HttpHandler();
+//
+//            //perform the authentication process and capture the result in serverResponse variable
+//            serverResponse = handler.makeServiceCallPost(url, userName, passWord);
+//
+//            //Clean response
+//            serverResponse=serverResponse.trim();
+//
+//            return null;
+//        }
+//
+//
+//        /***
+//         *  This method verify the authentication result
+//         *  If authenticated, it creates an jsonPerson Object and open an authenticatedActivity
+//         *  otherwise, it shows a error message
+//         * @param result
+//         */
+//        protected void onPostExecute (Void result){
+//            String msgToast;
+//
+//            //Verify the authentication result
+//            // not: the user could not be authenticated
+//            if (!serverResponse.equals("not")) {
+//                //The user has been authenticated
+//                //Update local session variables
+//                SharedPreferences.Editor editor = pref.edit();
+//                editor.putString("username", userName);
+//                editor.putString("password", passwd);
+//                editor.putString("sessionValue", serverResponse);
+//                editor.commit();
+//
+//                //Define the next activity
+//                Intent i = new Intent(MainActivity.this, HomePage.class);
+//                //call the DetailsActivity
+//                startActivity(i);
+//            }
+//            else {
+//                ///The user could not been authenticated, destroy session variables
+//                SharedPreferences.Editor editor = pref.edit();
+//                editor.clear();
+//                editor.commit();
+//
+//                //Toast message
+//                msgToast= "Wrong user or password";
+//                Toast.makeText(getApplicationContext(),
+//                        msgToast,
+//                        Toast.LENGTH_LONG).show();
+//            }
+//        }
+//    }
 }

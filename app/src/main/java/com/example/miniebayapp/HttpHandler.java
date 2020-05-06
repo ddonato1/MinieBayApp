@@ -33,8 +33,7 @@ public class HttpHandler {
         String response = null;
         try {
             //Generate a URL object from the requested URL
-
-            URL url = new URL(reqUrl);
+            URL url = new URL("http://192.168.0.11:8088/" + reqUrl);
             // Create a Http Connection
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -76,16 +75,20 @@ public class HttpHandler {
         String response = null;
         try {
             //Generate a URL object from the requested URL
-            URL url = new URL(reqUrl);
+            URL url = new URL("http://192.168.0.11:8088/" + reqUrl);
             // Create a Http Connection
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
             // Define Request GET
             conn.setRequestMethod("GET");
             System.out.println(conn.getRequestProperties().toString());
+
             // read the response
             InputStream in = new BufferedInputStream(conn.getInputStream());
+
             // Convert the InputStream in a Spring
             response = convertStreamToString(in);
+
         } catch (MalformedURLException e) {
             Log.e(TAG, "MalformedURLException: " + e.getMessage());
         } catch (ProtocolException e) {

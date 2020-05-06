@@ -14,7 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SettingsPage"></activity>
+        <activity android:name=".EditProduct"></activity>
+        <activity
+            android:name=".DeleteMyProduct"
+            android:parentActivityName=".SellingPage" />
+        <activity
+            android:name=".AddProduct"
+            android:parentActivityName=".SellingPage" />
+        <activity android:name=".CheckoutPage" />
+        <activity android:name=".SettingsPage" />
         <activity android:name=".HelpPage" />
         <activity android:name=".PaymentMethodPage" />
         <activity android:name=".PurchasesPage" />

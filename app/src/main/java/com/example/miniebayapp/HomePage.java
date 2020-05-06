@@ -3,6 +3,7 @@ package com.example.miniebayapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -35,13 +36,14 @@ import java.util.List;
 public class HomePage extends AppCompatActivity {
     TextView usern;
     String username;
+
     Button homeBtn;
     Button myEBAYbtn;
     Button notBtn;
     Button saleBtn;
     Button cartBtn;
 
-//        //This is for debugging
+//    //This is for debugging
 //    private String TAG = HomePage.class.getSimpleName();
 //    //This is for managing the listview in the activity
 //    private ListView listv;
@@ -51,6 +53,8 @@ public class HomePage extends AppCompatActivity {
 //    private UsersAdapter adapter;
 //    // Item list for storing data from the web server
 //    private ArrayList<userItem> itemUserList;
+
+    SharedPreferences prf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +66,9 @@ public class HomePage extends AppCompatActivity {
         notBtn = (Button) findViewById(R.id.notifButton);
         saleBtn = (Button) findViewById(R.id.saleButton);
         cartBtn = (Button) findViewById(R.id.shopitemButton);
+
+        //Access the local session variables
+        prf = getSharedPreferences("home_page",MODE_PRIVATE);
 
         Intent i = getIntent();
         username = i.getStringExtra("userName");
@@ -157,7 +164,7 @@ public class HomePage extends AppCompatActivity {
 //            HttpHandler sh = new HttpHandler();
 //
 //            // Making a request to url and getting response
-//            String url = "http://"+hostAddress+"/Mini_eBay/jsonItems.txt";
+//            String url = "http://"+hostAddress+"/getDataBaseJson";
 //
 //
 //            // Download data from the web server using JSON;
@@ -173,7 +180,7 @@ public class HomePage extends AppCompatActivity {
 //                    JSONObject jsonObj = new JSONObject(jsonStr);
 //
 //                    // Getting JSON Array node
-//                    JSONArray items = jsonObj.getJSONArray("items");
+//                    JSONArray items = jsonObj.getJSONArray("products");
 //
 //                    // looping through All Items
 //                    for (int i = 0; i < items.length(); i++) {
@@ -192,7 +199,7 @@ public class HomePage extends AppCompatActivity {
 //                        Drawable actualImage= LoadImageFromWebOperations(imageURL);
 //
 //                        // Create an userItem object and add it to the items' list
-//                        itemUserList.add(new userItem(name, price, actualImage));
+//                        itemUserList.add(new userItem(name, description, department, category, price, actualImage));
 //                    }
 //                } //Log any problem with received data
 //                catch (final JSONException e) {
@@ -280,7 +287,7 @@ public class HomePage extends AppCompatActivity {
 //            userItem user = getItem(position);
 //            // Check if an existing view is being reused, otherwise inflate the view
 //            if (convertView == null) {
-//                convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_shopping_cart_page, parent, false);
+//                convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_items, parent, false);
 //            }
 //            // Lookup view for data population
 //            TextView itemName = (TextView) convertView.findViewById(R.id.itemName);
@@ -325,11 +332,14 @@ public class HomePage extends AppCompatActivity {
 //
 //        /**
 //         *  Special constructor:
-//         * @param name: Item's name
-//         * @param price: Item's price
-//         * @param image: Item's image
+//         * @param s
+//         * @param description
+//         * @param department
+//         * @param name : Item's name
+//         * @param price : Item's price
+//         * @param image : Item's image
 //         */
-//        public userItem(String name, String price, Drawable image) {
+//        public userItem(String s, String description, String department, String name, String price, Drawable image) {
 //            this.name = name;
 //            this.price = price;
 //            this.image = image;
