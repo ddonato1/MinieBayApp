@@ -17,7 +17,7 @@ public class AddProduct extends AppCompatActivity {
     EditText price;
     EditText dept;
     EditText cate;
-    ImageView photo;
+    //ImageView photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
