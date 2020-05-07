@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 public class AddProduct extends AppCompatActivity {
     Button addPhoto;
+    Button addProduct;
 
     EditText nameP;
     EditText desc;
@@ -25,7 +26,8 @@ public class AddProduct extends AppCompatActivity {
         setContentView(R.layout.activity_add_product);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        addPhoto = (Button) findViewById(R.id.addBtn);
+        addPhoto = (Button) findViewById(R.id.addPhotoBtn);
+        addProduct = (Button) findViewById(R.id.addProductBtn);
 
         nameP = (EditText) findViewById(R.id.productNameText);
         desc = (EditText) findViewById(R.id.productDescText);
@@ -33,11 +35,11 @@ public class AddProduct extends AppCompatActivity {
         dept = (EditText) findViewById(R.id.departmentText);
         cate = (EditText) findViewById(R.id.categoriesText);
 
-       addPhoto.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-
-           }
-       });
+//       addPhoto.setOnClickListener(new View.OnClickListener() {
+//           @Override
+//           public void onClick(View view) {
+//
+//           }
+//       });
     }
 }
