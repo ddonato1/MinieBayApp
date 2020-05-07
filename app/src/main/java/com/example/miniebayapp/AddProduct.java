@@ -18,6 +18,7 @@ public class AddProduct extends AppCompatActivity {
     EditText price;
     EditText dept;
     EditText cate;
+
     //ImageView photo;
 
     @Override

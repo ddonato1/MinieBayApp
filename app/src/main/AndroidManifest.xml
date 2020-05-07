@@ -14,12 +14,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EditProductPhoto"></activity>
-        <activity android:name=".EditProductCategory" />
-        <activity android:name=".EditProductDepartment" />
-        <activity android:name=".EditProductPrice" />
-        <activity android:name=".EditProductDescription" />
-        <activity android:name=".EditProductName" />
+        <activity android:name=".EditProductPhoto"
+            android:parentActivityName=".EditProduct"></activity>
+        <activity android:name=".EditProductCategory"
+            android:parentActivityName=".EditProduct"/>
+        <activity android:name=".EditProductDepartment"
+            android:parentActivityName=".EditProduct"/>
+        <activity android:name=".EditProductPrice"
+            android:parentActivityName=".EditProduct"/>
+        <activity android:name=".EditProductDescription"
+            android:parentActivityName=".EditProduct"/>
+        <activity android:name=".EditProductName"
+            android:parentActivityName=".EditProduct"/>
         <activity
             android:name=".EditProduct"
             android:parentActivityName=".SellingPage" />
