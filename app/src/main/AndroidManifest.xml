@@ -14,7 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EditProductName"></activity>
+        <activity android:name=".EditProductPhoto"></activity>
+        <activity android:name=".EditProductCategory" />
+        <activity android:name=".EditProductDepartment" />
+        <activity android:name=".EditProductPrice" />
+        <activity android:name=".EditProductDescription" />
+        <activity android:name=".EditProductName" />
         <activity
             android:name=".EditProduct"
             android:parentActivityName=".SellingPage" />
