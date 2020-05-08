@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="36dp"
-                    android:layout_marginTop="55dp"
+                    android:layout_marginTop="35dp"
                     android:text="Description:"
                     android:textColor="#050505"
                     android:textSize="18sp" />
@@ -62,7 +62,7 @@
                     android:layout_width="234dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginTop="55dp"
+                    android:layout_marginTop="40dp"
                     android:ems="10" />
             </LinearLayout>
 
@@ -76,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="36dp"
-                    android:layout_marginTop="55dp"
+                    android:layout_marginTop="35dp"
                     android:text="Price:"
                     android:textColor="#050505"
                     android:textSize="18sp" />
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="155dp"
-                    android:layout_marginTop="55dp"
+                    android:layout_marginTop="40dp"
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="numberSigned" />
@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="26dp"
-                android:layout_marginTop="55dp"
+                android:layout_marginTop="35dp"
                 android:text="Category:"
                 android:textColor="#050505"
                 android:textSize="18sp" />

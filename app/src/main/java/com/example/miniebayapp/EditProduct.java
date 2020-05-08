@@ -12,7 +12,6 @@ public class EditProduct extends AppCompatActivity {
     Button nameEdit;
     Button descEdit;
     Button priceEdit;
-    Button deptEdit;
     Button cateEdit;
     Button photoEdit;
 
@@ -27,7 +26,6 @@ public class EditProduct extends AppCompatActivity {
         nameEdit = (Button) findViewById(R.id.editNameBtn);
         descEdit = (Button) findViewById(R.id.editDescBtn);
         priceEdit = (Button) findViewById(R.id.editPriceBtn);
-        deptEdit = (Button) findViewById(R.id.editDeptBtn);
         cateEdit = (Button) findViewById(R.id.editCateBtn);
         photoEdit = (Button) findViewById(R.id.editPhotoBtn);
 
@@ -53,14 +51,6 @@ public class EditProduct extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(EditProduct.this, EditProductPrice.class);
-                startActivity(i);
-            }
-        });
-
-        deptEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(EditProduct.this, EditProductDepartment.class);
                 startActivity(i);
             }
         });

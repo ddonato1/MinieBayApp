@@ -16,7 +16,6 @@ public class AddProduct extends AppCompatActivity {
     EditText nameP;
     EditText desc;
     EditText price;
-    EditText dept;
     EditText cate;
 
     //ImageView photo;
@@ -33,7 +32,6 @@ public class AddProduct extends AppCompatActivity {
         nameP = (EditText) findViewById(R.id.productNameText);
         desc = (EditText) findViewById(R.id.productDescText);
         price = (EditText) findViewById(R.id.priceText);
-        dept = (EditText) findViewById(R.id.departmentText);
         cate = (EditText) findViewById(R.id.categoriesText);
 
 //       addPhoto.setOnClickListener(new View.OnClickListener() {

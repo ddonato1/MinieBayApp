@@ -18,8 +18,6 @@
             android:parentActivityName=".EditProduct"></activity>
         <activity android:name=".EditProductCategory"
             android:parentActivityName=".EditProduct"/>
-        <activity android:name=".EditProductDepartment"
-            android:parentActivityName=".EditProduct"/>
         <activity android:name=".EditProductPrice"
             android:parentActivityName=".EditProduct"/>
         <activity android:name=".EditProductDescription"
