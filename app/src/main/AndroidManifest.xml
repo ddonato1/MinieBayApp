@@ -4,7 +4,6 @@
     package="com.example.miniebayapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +14,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".EditProductPhoto"
-            android:parentActivityName=".EditProduct"></activity>
+            android:parentActivityName=".EditProduct"/>
         <activity android:name=".EditProductCategory"
             android:parentActivityName=".EditProduct"/>
         <activity android:name=".EditProductPrice"

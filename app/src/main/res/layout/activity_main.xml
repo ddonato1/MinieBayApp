@@ -30,10 +30,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="125dp"
+        android:drawableLeft="@drawable/username"
         android:ems="10"
         android:hint="Username"
-        android:drawableLeft="@drawable/username"
-        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

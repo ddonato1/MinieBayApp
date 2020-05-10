@@ -12,6 +12,8 @@ public class MyebayInfo extends AppCompatActivity {
     TextView usern;
     TextView firstn;
     TextView lastn;
+    TextView address;
+    TextView email;
     String username;
     String firstname;
     String lastname;
@@ -29,7 +31,18 @@ public class MyebayInfo extends AppCompatActivity {
     Button help;
     Button payment;
     Button bidsO;
-    Button settings;
+    Button logout;
+
+    //  //This is for debugging
+//    private String TAG = RegisterPage.class.getSimpleName();
+//    //This is for managing the listview in the activity
+//    private ListView listv;
+//    //Web server's IP address
+//    private String hostAddress;
+//    //Users adapter
+//    private UsersAdapter adapter;
+//    // Item list for storing data from the web server
+//    private ArrayList<userItem> itemUserList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,19 +60,46 @@ public class MyebayInfo extends AppCompatActivity {
         purchases = (Button) findViewById(R.id.purchasesBtn);
         payment = (Button) findViewById(R.id.paymentBtn);
         help = (Button) findViewById(R.id.helpBtn);
-        settings = (Button) findViewById(R.id.settingsBtn);
+        logout = (Button) findViewById(R.id.logoutBtn);
 
-        Intent i = getIntent();
-        username = i.getStringExtra("userName");
-        firstname = i.getStringExtra("first name");
-        lastname = i.getStringExtra("last name");
+//        Intent i = getIntent();
+//        username = i.getStringExtra("userName");
+//        firstname = i.getStringExtra("first name");
+//        lastname = i.getStringExtra("last name");
 
-        usern = findViewById(R.id.usernameView);
-        usern.setText("" + username);
-        firstn = findViewById(R.id.fisrtNameView);
-        firstn.setText("" + firstname);
-        lastn = findViewById(R.id.lastNameView);
-        lastn.setText("" + lastname);
+        usern = (TextView) findViewById(R.id.usernameView);
+//        usern.setText("" + username);
+        firstn = (TextView) findViewById(R.id.fisrtNameView);
+//        firstn.setText("" + firstname);
+        lastn = (TextView) findViewById(R.id.lastNameView);
+//        lastn.setText("" + lastname);
+        address = (TextView) findViewById(R.id.addressView);
+        email = (TextView) findViewById(R.id.emailView);
+
+        //Access the local session variables
+//        prf = getSharedPreferences("user_inf",MODE_PRIVATE);
+
+        //Display on the screen
+//        usern.setText("" + prf.getString("username", null));
+//        firstn.setText("" + prf.getString("first name", null));
+//        lastn.setText("" + prf.getString("last name", null));
+//        address.setText("" + prf.getString("address", null));
+//        email.setText("" + prf.getString("email", null));
+
+        //    // Define the web server's IP address
+//        hostAddress="192.168.0.11:8088";
+//
+//        //Instate the Item list
+//        itemUserList = new ArrayList<>();
+//
+//        // Defines the adapter: Receives the context (Current activity) and the Arraylist
+//        adapter = new UsersAdapter(this, itemUserList);
+//
+//        // Create a accessor to the ListView in the activity
+//        listv = findViewById(R.id.itemLists);
+//
+//        // Create and start the thread
+//        new GetItems(this).execute();
 
         homeBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -131,7 +171,7 @@ public class MyebayInfo extends AppCompatActivity {
             }
         });
 
-        settings.setOnClickListener(new View.OnClickListener() {
+        logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 settingsBtnObject();

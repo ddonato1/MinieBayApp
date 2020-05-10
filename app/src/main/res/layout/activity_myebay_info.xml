@@ -181,7 +181,7 @@
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <Button
-                    android:id="@+id/settingsBtn"
+                    android:id="@+id/logoutBtn"
                     android:layout_width="500dp"
                     android:layout_height="55dp"
                     android:layout_below="@id/helpBtn"
@@ -190,8 +190,7 @@
                     android:layout_marginRight="100dp"
                     android:layout_marginBottom="54dp"
                     android:background="#FFFFFF"
-                    android:drawableTop="@drawable/settings"
-                    android:text="Settings"
+                    android:text="Logout"
                     android:textAllCaps="false"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent" />
