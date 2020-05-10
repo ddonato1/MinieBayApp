@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.View;
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     //Intent for calling another activity
     Intent i;
     //Shared object though the application
-    SharedPreferences pref;
+    SharedPreferences pref, pef;
 
     //Host address
     protected String hostAddress="192.168.0.11:8088";
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     EditText userpass;
     Button btnlogin;
     TextView register;
-    TextView forgotPass;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +53,12 @@ public class MainActivity extends AppCompatActivity {
         btnlogin = (Button) findViewById(R.id.loginButton);
 
         register = (TextView) findViewById(R.id.registerTxtView);
-        forgotPass = (TextView) findViewById(R.id.forgotPassTxtView);
 
-//        btnlogin.setOnClickListener(new View.OnClickListener(){
-//                @Override
-//                public void onClick(View v){
-//                   Intent i = new Intent(MainActivity.this, HomePage.class);
-//                   startActivity(i);
-//                }
-//            });
+        /**
+         * EDIT!!!!!
+         */
+        pef = getSharedPreferences("logout",MODE_PRIVATE);
+        pef.getString("sessionValues",null);
 
         /*Create local session variables*/
         pref = getSharedPreferences("user_details", MODE_PRIVATE);
@@ -99,13 +97,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-       forgotPass.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               Intent iFP = new Intent(MainActivity.this, ChangePasswordPage.class);
-               startActivity(iFP);
-           }
-       });
     }
 
 

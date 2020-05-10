@@ -3,6 +3,7 @@ package com.example.miniebayapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -33,12 +34,13 @@ public class MyebayInfo extends AppCompatActivity {
     Button bidsO;
     Button logout;
 
-    //  //This is for debugging
-//    private String TAG = RegisterPage.class.getSimpleName();
+    SharedPreferences perf;
+      //This is for debugging
+    private String TAG = HttpHandler.class.getSimpleName();
 //    //This is for managing the listview in the activity
 //    private ListView listv;
-//    //Web server's IP address
-//    private String hostAddress;
+    //Web server's IP address
+    private String hostAddress;
 //    //Users adapter
 //    private UsersAdapter adapter;
 //    // Item list for storing data from the web server
@@ -86,8 +88,8 @@ public class MyebayInfo extends AppCompatActivity {
 //        address.setText("" + prf.getString("address", null));
 //        email.setText("" + prf.getString("email", null));
 
-        //    // Define the web server's IP address
-//        hostAddress="192.168.0.11:8088";
+            // Define the web server's IP address
+            hostAddress="192.168.0.11:8088";
 //
 //        //Instate the Item list
 //        itemUserList = new ArrayList<>();
@@ -174,7 +176,7 @@ public class MyebayInfo extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                settingsBtnObject();
+                logoutBtnObject();
             }
         });
     }
@@ -229,8 +231,20 @@ public class MyebayInfo extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void settingsBtnObject() {
-        Intent i = new Intent(MyebayInfo.this, SettingsPage.class);
+    /**
+     * EDIT!!!!!
+     */
+    public void logoutBtnObject() {
+        perf = getSharedPreferences("logout",MODE_PRIVATE);
+//        perf.getString("sessionValues",null);
+        SharedPreferences.Editor ed = perf.edit();
+        ed.clear();
+        ed.commit();
+
+        MyebayInfo.this.finishAffinity();
+
+        //Call the MainActivity where is the login activity
+        Intent i = new Intent(MyebayInfo.this, MainActivity.class);
         startActivity(i);
     }
 }

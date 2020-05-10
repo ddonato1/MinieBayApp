@@ -51,20 +51,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/forgotPassTxtView"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:paddingLeft="5dp"
-            android:layout_marginTop="14dp"
-            android:paddingTop="3dp"
-            android:text="@string/forgot_my_password"
-            android:textColor="#065E56"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+        android:orientation="horizontal"/>
 
     <Button
         android:id="@+id/loginButton"

@@ -13,16 +13,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EditProductPhoto"
-            android:parentActivityName=".EditProduct"/>
-        <activity android:name=".EditProductCategory"
-            android:parentActivityName=".EditProduct"/>
-        <activity android:name=".EditProductPrice"
-            android:parentActivityName=".EditProduct"/>
-        <activity android:name=".EditProductDescription"
-            android:parentActivityName=".EditProduct"/>
-        <activity android:name=".EditProductName"
-            android:parentActivityName=".EditProduct"/>
+        <activity android:name=".ProductInfo"></activity>
+        <activity
+            android:name=".EditProductPhoto"
+            android:parentActivityName=".EditProduct" />
+        <activity
+            android:name=".EditProductCategory"
+            android:parentActivityName=".EditProduct" />
+        <activity
+            android:name=".EditProductPrice"
+            android:parentActivityName=".EditProduct" />
+        <activity
+            android:name=".EditProductDescription"
+            android:parentActivityName=".EditProduct" />
+        <activity
+            android:name=".EditProductName"
+            android:parentActivityName=".EditProduct" />
         <activity
             android:name=".EditProduct"
             android:parentActivityName=".SellingPage" />
@@ -48,7 +54,11 @@
         </activity>
         <activity android:name=".HomePage" />
         <activity android:name=".RegisterPage" />
-        <activity android:name=".ChangePasswordPage" />
+        <activity android:name=".SearchResultView">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ShoppingCartPage"
             android:parentActivityName=".HomePage" />

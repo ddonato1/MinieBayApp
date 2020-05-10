@@ -54,7 +54,8 @@ public class HomePage extends AppCompatActivity {
     // Item list for storing data from the web server
     private ArrayList<userItem> itemUserList;
 
-    SharedPreferences prf;
+    SharedPreferences prf, perf;
+    Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,41 @@ public class HomePage extends AppCompatActivity {
         prf = getSharedPreferences("user_details",MODE_PRIVATE);
         usern.setText("" +prf.getString("username", null));
         prf.getString("sessionValue", null);
+
+        /*Create local session variables*/
+//        perf = getSharedPreferences("user_det", MODE_PRIVATE);
+//        i = new Intent(HomePage.this, MyebayInfo.class);
+
+        //if(perf.contains("sessionValues")){
+            myEBAYbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    myEBAYBtnObject();
+                }
+            });
+       // }
+//        //Verify for session variables
+//        if(perf.contains("sessionValue")) {
+//            //The user has log to the application
+//            userName = pref.getString("user", null);
+//            passwd = pref.getString("sessionValue", null);
+//
+//            //Authenticate credentials
+//            new GetItems(MainActivity.this).execute();
+//        }
+//        else {
+//            //The user has not been authenticated
+//            btnlogin.setOnClickListener(new View.OnClickListener(){
+//                @Override
+//                public void onClick(View v){
+//                    userName = username.getText().toString();
+//                    passwd = userpass.getText().toString();
+//
+//                    //Authenticate the user via webservices
+//                    new GetItems(MainActivity.this).execute();
+//                }
+//            });
+
         // Define the web server's IP address
         hostAddress="192.168.0.11:8088";
         //Instate the Item list
@@ -92,13 +128,6 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 homeBtnObject();
-            }
-        });
-
-        myEBAYbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myEBAYBtnObject();
             }
         });
 
@@ -177,30 +206,48 @@ public class HomePage extends AppCompatActivity {
                     JSONObject jsonObj = new JSONObject(jsonStr);
 
                     // Getting JSON Array node
-                    JSONArray items = jsonObj.getJSONArray("DEPARTMENTS");
+                    JSONArray items = jsonObj.getJSONArray("PRODUCT");
+                    JSONArray items1 = jsonObj.getJSONArray("INFORMATION");
 
                     // looping through All Items
                     for (int i = 0; i < items.length(); i++) {
                         JSONObject c = items.getJSONObject(i);
-//                        String id = c.getString("id");
-//                        String name = c.getString("name");
-//                        String description = c.getString("description");
-//                        String imageLocation = c.getString("image");
-//                        String department = c.getString("department");
-//                        String category = c.getString("category");
-//                        String price = c.getString("price");
-                        String departmentID = c.getString("deptid");
-                        String namedtp = c.getString("Name");
-                        String imageLocation = c.getString("image");
+                        JSONObject c1 = items1.getJSONObject(i);
+                            String ownerP = c1.getString("Owner");
+                            String name = c.getString("Name");
+                            String description = c.getString("Description");
+                            String price = c.getString("Price");
+                            String department = c.getString("deptid");
+                            String category = c.getString("cateid");
+                            String imageLocation = c.getString("photoURL");
 
-                        //Create URL for each image
-                        String imageURL = "http://" + hostAddress + "/" + imageLocation;
-                        //Download the actual image using the imageURL
-                        Drawable actualImage= LoadImageFromWebOperations(imageURL);
+                            //Create URL for each image
+                            String imageURL = "http://" + hostAddress + "/" + imageLocation;
+                            //Download the actual image using the imageURL
+                            Drawable actualImage= LoadImageFromWebOperations(imageURL);
+
+                            itemUserList.add(new userItem(ownerP, name, description, department, category, price, actualImage));
+
+
+//                        String name = c.getString("Name");
+//                        String description = c.getString("Description");
+//                        String price = c.getString("Price");
+//                        String department = c.getString("deptid");
+//                        String category = c.getString("cateid");
+//                        String imageLocation = c.getString("photoURL");
+//                        String departmentID = c.getString("deptid");
+//                        String namedtp = c.getString("Name");
+//                        String imageLocation = c.getString("image");
+
+//                        //Create URL for each image
+//                        String imageURL = "http://" + hostAddress + "/" + imageLocation;
+//                        //Download the actual image using the imageURL
+//                        Drawable actualImage= LoadImageFromWebOperations(imageURL);
 
                         // Create an userItem object and add it to the items' list
+//                        itemUserList.add(new userItem(ownerP, name, description, department, category, price, actualImage));
 //                        itemUserList.add(new userItem(name, description, department, category, price, actualImage));
-                        itemUserList.add(new userItem(departmentID, namedtp, actualImage));
+//                        itemUserList.add(new userItem(departmentID, namedtp, actualImage));
                     }
                 } //Log any problem with received data
                 catch (final JSONException e) {
@@ -291,13 +338,21 @@ public class HomePage extends AppCompatActivity {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_items, parent, false);
             }
             // Lookup view for data population
+            TextView itemOwner = (TextView) convertView.findViewById(R.id.itemOwner);
             TextView itemName = (TextView) convertView.findViewById(R.id.itemName);
+            TextView itemDesc = (TextView) convertView.findViewById(R.id.itemDescription);
             TextView itemPrice = (TextView) convertView.findViewById(R.id.itemPrice);
+            TextView itemDept = (TextView) convertView.findViewById(R.id.itemDepartment);
+            TextView itemCate = (TextView) convertView.findViewById(R.id.itemCategory);
             ImageView itemImage = (ImageView) convertView.findViewById(R.id.imageView);
 
             // Populate the data into the template view using the data object
+            itemOwner.setText(user.owner);
             itemName.setText(user.name);
+            itemDesc.setText(user.description);
             itemPrice.setText(user.price);
+            itemDept.setText(user.department);
+            itemCate.setText(user.category);
             itemImage.setImageDrawable(user.image);
 
             // Return the completed view to render on screen
@@ -309,6 +364,7 @@ public class HomePage extends AppCompatActivity {
                 public void onClick(View view) {
                     int position = (Integer) view.getTag();
 
+                    Intent inT = new Intent(HomePage.this, ProductInfo.class);
                     // Show data of the clicked item
                     Toast.makeText(getApplicationContext(),
                             "You have selected " + itemUserList.get(position).name,
@@ -324,22 +380,37 @@ public class HomePage extends AppCompatActivity {
      *  This class generates a Data structure for manipulating each Item in the application
      */
     public class userItem {
+        public String owner;
         // Item's list
         public String name;
+        // Item's description
+        public String description;
         // Item's price
         public String price;
+        // Item's department
+        public String department;
+        // Item's category
+        public String category;
         // Item's image
         public Drawable image;
 
         /**
          *  Special constructor:
-         * @param s
+         * @param owner
+         * @param name
          * @param description
+         * @param price
+         * @param department
+         * @param category
          * @param image : Item's image
          */
-        public userItem(String s, String description, Drawable image) {
+        public userItem(String owner, String name, String description, String price, String department, String category, Drawable image) {
+            this.owner = owner;
             this.name = name;
+            this.description = description;
             this.price = price;
+            this.department = department;
+            this.category = category;
             this.image = image;
         }
     }
