@@ -364,12 +364,13 @@ public class HomePage extends AppCompatActivity {
                 public void onClick(View view) {
                     int position = (Integer) view.getTag();
 
-                    Intent inT = new Intent(HomePage.this, ProductInfo.class);
                     // Show data of the clicked item
                     Toast.makeText(getApplicationContext(),
                             "You have selected " + itemUserList.get(position).name,
                             Toast.LENGTH_LONG).show();
                     // Do what you want here...
+                    Intent inT = new Intent(HomePage.this, ProductInfo.class);
+                    startActivity(inT);
                 }
             });
             return convertView;
