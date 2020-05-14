@@ -1,5 +1,6 @@
 package com.example.miniebayapp;
 
+import android.graphics.drawable.DrawableWrapper;
 import android.util.Log;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -10,6 +11,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+
+import javax.crypto.spec.DESedeKeySpec;
 
 public class HttpHandler {
     // This for debugging
@@ -132,7 +135,7 @@ public class HttpHandler {
         return sb.toString();
     }
 
-    public String makeServiceCallPost2(String reqUrl, String userN, String passwd, String firstname, String lastname, String add, String phonenum, String email) {
+    public String makeServiceCallPost2(String reqUrl, String userN, String passwd, String firstname, String lastname, String phonenum, String email, String add) {
         // HTTP Response
         String response = null;
         try {
@@ -145,7 +148,43 @@ public class HttpHandler {
             conn.setRequestMethod("POST");
 
             //Define the parameters list
-            String parameters="user="+userN+"&pass="+passwd+"&fname="+firstname+"&lname="+lastname+"&add="+add+"&tel="+phonenum+"&e_mail="+email;
+            String parameters="user="+userN+"&pass="+passwd+"&fname="+firstname+"&lname="+lastname+"&tel="+add+"&e_mail="+phonenum+"&add="+email;
+
+            //Establish the option for sending parameters using the POST method
+            conn.setDoOutput(true);
+            //Add the parameters list to the http request
+            conn.getOutputStream().write(parameters.getBytes("UTF-8"));
+
+            // read the response
+            InputStream in = new BufferedInputStream(conn.getInputStream());
+            // Convert the InputStream in a Spring
+            response = convertStreamToString(in);
+        } catch (MalformedURLException e) {
+            Log.e(TAG, "MalformedURLException: " + e.getMessage());
+        } catch (ProtocolException e) {
+            Log.e(TAG, "ProtocolException: " + e.getMessage());
+        } catch (IOException e) {
+            Log.e(TAG, "IOException: " + e.getMessage());
+        } catch (Exception e) {
+            Log.e(TAG, "Exception: " + e.getMessage());
+        }
+        return response;
+    }
+
+    public String makeServiceCallPost3(String reqUrl, String Name, String Description, String Price, String cateid, String deptid) {
+        // HTTP Response
+        String response = null;
+        try {
+            //Generate a URL object from the requested URL
+            URL url = new URL(reqUrl);
+            // Create a Http Connection
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            // Define Request POST
+            conn.setRequestMethod("POST");
+
+            //Define the parameters list
+            String parameters="namep="+Name+"&decp="+ Description +"&pricep="+Price+"&photoURL="+"&cateid="+cateid+"&deptid="+deptid;
 
             //Establish the option for sending parameters using the POST method
             conn.setDoOutput(true);

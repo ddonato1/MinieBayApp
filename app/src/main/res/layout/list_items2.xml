@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="128dp"
+        android:layout_height="111dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="147dp"
+        android:layout_marginLeft="147dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="147dp"
+        android:contentDescription="@string/app_name"
+        android:padding="10dp"
+        android:src="@drawable/camera_icon" />
+
+    <TextView
+        android:id="@+id/itemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/imageView"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="-36dp"
+        android:text="Product Name" />
+
+    <TextView
+        android:id="@+id/itemOwner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/itemName"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="-34dp"
+        android:text="Product Owner" />
+
+    <TextView
+        android:id="@+id/itemDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/itemOwner"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="-34dp"
+        android:text="Product Description" />
+
+    <TextView
+        android:id="@+id/itemPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/itemDescription"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="-34dp"
+        android:text="Price" />
+
+    <TextView
+        android:id="@+id/itemDepartment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/itemPrice"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="-34dp"
+        android:text="Department" />
+
+    <TextView
+        android:id="@+id/itemCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/itemDepartment"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="-34dp"
+        android:text="Category" />
+</RelativeLayout>

@@ -7,10 +7,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.app.Activity;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.URL;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -156,7 +158,7 @@ public class HomePage extends AppCompatActivity {
     /***
      *  This class is a thread for receiving and process data from the Web server
      */
-    private class GetItems extends AsyncTask<Void, Void, Void> {
+    class GetItems extends AsyncTask<Void, Void, Void> {
         // Context: every transaction in a Android application must be attached to a context
         private Activity activity;
 
@@ -226,7 +228,7 @@ public class HomePage extends AppCompatActivity {
                             //Download the actual image using the imageURL
                             Drawable actualImage= LoadImageFromWebOperations(imageURL);
 
-                            itemUserList.add(new userItem(ownerP, name, description, department, category, price, actualImage));
+                            itemUserList.add(new userItem(actualImage, description, price, category, department, name, ownerP));
 
 
 //                        String name = c.getString("Name");
@@ -370,7 +372,18 @@ public class HomePage extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
                     // Do what you want here...
                     Intent inT = new Intent(HomePage.this, ProductInfo.class);
+                    inT.putExtra("Item selected", String.valueOf(itemUserList.get(position)));
                     startActivity(inT);
+
+//                    if(itemUserList.get(position).equals(0)) {
+//                        Intent inT = new Intent(HomePage.this, ProductInfo.class);
+//                        startActivity(inT);
+//                    }
+//                    else {
+//                        Intent inT = new Intent(HomePage.this, ProductInfo.class);
+//                        startActivity(inT);
+//                    }
+
                 }
             });
             return convertView;
@@ -405,7 +418,7 @@ public class HomePage extends AppCompatActivity {
          * @param category
          * @param image : Item's image
          */
-        public userItem(String owner, String name, String description, String price, String department, String category, Drawable image) {
+        public userItem(Drawable image, String description, String price, String category, String department, String name, String owner) {
             this.owner = owner;
             this.name = name;
             this.description = description;
