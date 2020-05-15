@@ -4,12 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,7 +28,12 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -33,17 +45,22 @@ public class AddProduct extends AppCompatActivity {
     EditText nameP;
     EditText desc;
     EditText price;
-    CheckBox check0, check1, check2, check3, check4, check5, check6, check7, check8, check9,
-            check10, check11, check12, check13, check14, check15, check16, check17, check18,
-            check19, check20, check21, check22, check23, check24, check25, check26, check27,
-            check28, check29, check30;
+    EditText dept;
+    EditText cate;
+//    CheckBox check0, check1, check2, check3, check4, check5, check6, check7, check8, check9,
+//            check10, check11, check12, check13, check14, check15, check16, check17, check18,
+//            check19, check20, check21, check22, check23, check24, check25, check26, check27,
+//            check28, check29, check30;
 
-    String nameprod, descprod, priceprod, check_0, check_1, check_2, check_3, check_4, check_5,
-            check_6, check_7, check_8, check_9, check_10, check_11, check_12, check_13, check_14, check_15,
-            check_16, check_17, check_18, check_19, check_20, check_21, check_22, check_23, check_24,
-            check_25, check_26, check_27, check_28, check_29, check_30;
+    String nameprod, descprod, priceprod, deptprod, categprod;
+//    String check_0, check_1, check_2, check_3, check_4, check_5, check_6, check_7, check_8,
+//            check_9, check_10, check_11, check_12, check_13, check_14, check_15, check_16,
+//            check_17, check_18, check_19, check_20, check_21, check_22, check_23, check_24,
+//            check_25, check_26, check_27, check_28, check_29, check_30;
 
-    Drawable image;
+    String image;
+    String addphoto;
+    String Photo;
 
     ImageView photo;
 
@@ -57,9 +74,6 @@ public class AddProduct extends AppCompatActivity {
     SharedPreferences prf;
     //Authentication Servlet name
     protected String servletN = "addproduct";
-
-    public static final String FILE_UPLOAD_URL = "http://192.168.0.11/imagejson_miniebay";
-    //private static final String TAG = AddProduct.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,54 +89,68 @@ public class AddProduct extends AppCompatActivity {
         nameP = (EditText) findViewById(R.id.productNameText);
         desc = (EditText) findViewById(R.id.productDescText);
         price = (EditText) findViewById(R.id.priceText);
-        check0 = (CheckBox) findViewById(R.id.checkAudio);
-        check1 = (CheckBox) findViewById(R.id.checkBaby);
-        check2 = (CheckBox) findViewById(R.id.checkBedR);
-        check3 = (CheckBox) findViewById(R.id.checkBirds);
-        check4 = (CheckBox) findViewById(R.id.checkBoys);
-        check5 = (CheckBox) findViewById(R.id.checkChems);
-        check6 = (CheckBox) findViewById(R.id.checkComp);
-        check7 = (CheckBox) findViewById(R.id.checkDinR);
-        check8 = (CheckBox) findViewById(R.id.checkDogCat);
-        check9 = (CheckBox) findViewById(R.id.checkFish);
-        check10 = (CheckBox) findViewById(R.id.checkFlowers);
-        check11 = (CheckBox) findViewById(R.id.checkFruits);
-        check12 = (CheckBox) findViewById(R.id.checkGen);
-        check13 = (CheckBox) findViewById(R.id.checkGenEq);
-        check14 = (CheckBox) findViewById(R.id.checkGenToy);
-        check15 = (CheckBox) findViewById(R.id.checkGirls);
-        check16 = (CheckBox) findViewById(R.id.checkHair);
-        check17 = (CheckBox) findViewById(R.id.checkKit);
-        check18 = (CheckBox) findViewById(R.id.checkLivR);
-        check19 = (CheckBox) findViewById(R.id.checkMakeUp);
-        check20 = (CheckBox) findViewById(R.id.checkMen);
-        check21 = (CheckBox) findViewById(R.id.checkMovies);
-        check22 = (CheckBox) findViewById(R.id.checkMusic);
-        check23 = (CheckBox) findViewById(R.id.checkNatVit);
-        check24 = (CheckBox) findViewById(R.id.checkShoes);
-        check25 = (CheckBox) findViewById(R.id.checkSkinC);
-        check26 = (CheckBox) findViewById(R.id.checkSports);
-        check27 = (CheckBox) findViewById(R.id.checkTires);
-        check28 = (CheckBox) findViewById(R.id.checkVeggie);
-        check29 = (CheckBox) findViewById(R.id.checkVideoG);
-        check30 = (CheckBox) findViewById(R.id.checkWomen);
+        dept = (EditText) findViewById(R.id.deptText);
+//        check0 = (CheckBox) findViewById(R.id.checkAudio);
+//        check1 = (CheckBox) findViewById(R.id.checkBaby);
+//        check2 = (CheckBox) findViewById(R.id.checkBedR);
+//        check3 = (CheckBox) findViewById(R.id.checkBirds);
+//        check4 = (CheckBox) findViewById(R.id.checkBoys);
+//        check5 = (CheckBox) findViewById(R.id.checkChems);
+//        check6 = (CheckBox) findViewById(R.id.checkComp);
+//        check7 = (CheckBox) findViewById(R.id.checkDinR);
+//        check8 = (CheckBox) findViewById(R.id.checkDogCat);
+//        check9 = (CheckBox) findViewById(R.id.checkFish);
+//        check10 = (CheckBox) findViewById(R.id.checkFlowers);
+//        check11 = (CheckBox) findViewById(R.id.checkFruits);
+//        check12 = (CheckBox) findViewById(R.id.checkGen);
+//        check13 = (CheckBox) findViewById(R.id.checkGenEq);
+//        check14 = (CheckBox) findViewById(R.id.checkGenToy);
+//        check15 = (CheckBox) findViewById(R.id.checkGirls);
+//        check16 = (CheckBox) findViewById(R.id.checkHair);
+//        check17 = (CheckBox) findViewById(R.id.checkKit);
+//        check18 = (CheckBox) findViewById(R.id.checkLivR);
+//        check19 = (CheckBox) findViewById(R.id.checkMakeUp);
+//        check20 = (CheckBox) findViewById(R.id.checkMen);
+//        check21 = (CheckBox) findViewById(R.id.checkMovies);
+//        check22 = (CheckBox) findViewById(R.id.checkMusic);
+//        check23 = (CheckBox) findViewById(R.id.checkNatVit);
+//        check24 = (CheckBox) findViewById(R.id.checkShoes);
+//        check25 = (CheckBox) findViewById(R.id.checkSkinC);
+//        check26 = (CheckBox) findViewById(R.id.checkSports);
+//        check27 = (CheckBox) findViewById(R.id.checkTires);
+//        check28 = (CheckBox) findViewById(R.id.checkVeggie);
+//        check29 = (CheckBox) findViewById(R.id.checkVideoG);
+//        check30 = (CheckBox) findViewById(R.id.checkWomen);
 
-//       addPhoto.setOnClickListener(new View.OnClickListener() {
-//           @Override
-//           public void onClick(View view) {
-//
-//           }
-//       });
-
-        addProduct.setOnClickListener(new View.OnClickListener() {
+        addPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new postItems(AddProduct.this).execute();
-
-                Intent i = new Intent(AddProduct.this, SellingPage.class);
-                startActivity(i);
+                FileOutputStream out;
+                FileInputStream in;
+                image = "/imagesjson_miniebay";
+                File filename = new File(getApplicationContext().getFilesDir(), image);
+                try {
+                    out = new FileOutputStream (new File(filename.getAbsolutePath().toString()), true); // true will be same as Context.MODE_APPEND
+                    //out = openFileOutput(String.valueOf(filename), Context.MODE_PRIVATE);
+                    //in = get
+                    out.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
+
+//        addProduct.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new postItems(AddProduct.this).execute();
+//
+//                Intent i = new Intent(AddProduct.this, SellingPage.class);
+//                startActivity(i);
+//            }
+//        });
 
         // Define the web server's IP address
         hostAddress = "192.168.0.11:8088";
@@ -165,51 +193,63 @@ public class AddProduct extends AppCompatActivity {
 
             try {
                 //Read GUI inputs
-                String categ = "", deptid = "", owner;
+                //String categ = "", deptid = "";
+                String owner = "";
                 nameprod = ((EditText) findViewById(R.id.productNameText)).getText().toString();
                 descprod = ((EditText) findViewById(R.id.productDescText)).getText().toString();
                 priceprod = ((EditText) findViewById(R.id.priceText)).getText().toString();
-                check_0 = ((CheckBox) findViewById(R.id.checkAudio)).getText().toString();
-                check_1 = ((CheckBox) findViewById(R.id.checkBaby)).getText().toString();
-                check_2 = ((CheckBox) findViewById(R.id.checkBedR)).getText().toString();
-                check_3 = ((CheckBox) findViewById(R.id.checkBirds)).getText().toString();
-                check_4 = ((CheckBox) findViewById(R.id.checkBoys)).getText().toString();
-                check_5 = ((CheckBox) findViewById(R.id.checkChems)).getText().toString();
-                check_6 = ((CheckBox) findViewById(R.id.checkComp)).getText().toString();
-                check_7 = ((CheckBox) findViewById(R.id.checkDinR)).getText().toString();
-                check_8 = ((CheckBox) findViewById(R.id.checkDogCat)).getText().toString();
-                check_9 = ((CheckBox) findViewById(R.id.checkFish)).getText().toString();
-                check_10 = ((CheckBox) findViewById(R.id.checkFlowers)).getText().toString();
-                check_11 = ((CheckBox) findViewById(R.id.checkFruits)).getText().toString();
-                check_12 = ((CheckBox) findViewById(R.id.checkGen)).getText().toString();
-                check_13 = ((CheckBox) findViewById(R.id.checkGenEq)).getText().toString();
-                check_14 = ((CheckBox) findViewById(R.id.checkGenToy)).getText().toString();
-                check_15 = ((CheckBox) findViewById(R.id.checkGirls)).getText().toString();
-                check_16 = ((CheckBox) findViewById(R.id.checkHair)).getText().toString();
-                check_17 = ((CheckBox) findViewById(R.id.checkKit)).getText().toString();
-                check_18 = ((CheckBox) findViewById(R.id.checkLivR)).getText().toString();
-                check_19 = ((CheckBox) findViewById(R.id.checkMakeUp)).getText().toString();
-                check_20 = ((CheckBox) findViewById(R.id.checkMen)).getText().toString();
-                check_21 = ((CheckBox) findViewById(R.id.checkMovies)).getText().toString();
-                check_22 = ((CheckBox) findViewById(R.id.checkMusic)).getText().toString();
-                check_23 = ((CheckBox) findViewById(R.id.checkNatVit)).getText().toString();
-                check_24 = ((CheckBox) findViewById(R.id.checkShoes)).getText().toString();
-                check_25 = ((CheckBox) findViewById(R.id.checkSkinC)).getText().toString();
-                check_26 = ((CheckBox) findViewById(R.id.checkSports)).getText().toString();
-                check_27 = ((CheckBox) findViewById(R.id.checkTires)).getText().toString();
-                check_28 = ((CheckBox) findViewById(R.id.checkVeggie)).getText().toString();
-                check_29 = ((CheckBox) findViewById(R.id.checkVideoG)).getText().toString();
-                check_30 = ((CheckBox) findViewById(R.id.checkWomen)).getText().toString();
+                deptprod = ((EditText) findViewById(R.id.deptText)).getText().toString();
+                //Photo = ((ImageView) findViewById(R.id.photoView)).getText().toString();
+
+                //ADD THE DEPARTMENTS AND CATEGORIES!!!
+//                check_0 = ((CheckBox) findViewById(R.id.checkAudio)).getText().toString();
+//                check_1 = ((CheckBox) findViewById(R.id.checkBaby)).getText().toString();
+//                check_2 = ((CheckBox) findViewById(R.id.checkBedR)).getText().toString();
+//                check_3 = ((CheckBox) findViewById(R.id.checkBirds)).getText().toString();
+//                check_4 = ((CheckBox) findViewById(R.id.checkBoys)).getText().toString();
+//                check_5 = ((CheckBox) findViewById(R.id.checkChems)).getText().toString();
+//                check_6 = ((CheckBox) findViewById(R.id.checkComp)).getText().toString();
+//                check_7 = ((CheckBox) findViewById(R.id.checkDinR)).getText().toString();
+//                check_8 = ((CheckBox) findViewById(R.id.checkDogCat)).getText().toString();
+//                check_9 = ((CheckBox) findViewById(R.id.checkFish)).getText().toString();
+//                check_10 = ((CheckBox) findViewById(R.id.checkFlowers)).getText().toString();
+//                check_11 = ((CheckBox) findViewById(R.id.checkFruits)).getText().toString();
+//                check_12 = ((CheckBox) findViewById(R.id.checkGen)).getText().toString();
+//                check_13 = ((CheckBox) findViewById(R.id.checkGenEq)).getText().toString();
+//                check_14 = ((CheckBox) findViewById(R.id.checkGenToy)).getText().toString();
+//                check_15 = ((CheckBox) findViewById(R.id.checkGirls)).getText().toString();
+//                check_16 = ((CheckBox) findViewById(R.id.checkHair)).getText().toString();
+//                check_17 = ((CheckBox) findViewById(R.id.checkKit)).getText().toString();
+//                check_18 = ((CheckBox) findViewById(R.id.checkLivR)).getText().toString();
+//                check_19 = ((CheckBox) findViewById(R.id.checkMakeUp)).getText().toString();
+//                check_20 = ((CheckBox) findViewById(R.id.checkMen)).getText().toString();
+//                check_21 = ((CheckBox) findViewById(R.id.checkMovies)).getText().toString();
+//                check_22 = ((CheckBox) findViewById(R.id.checkMusic)).getText().toString();
+//                check_23 = ((CheckBox) findViewById(R.id.checkNatVit)).getText().toString();
+//                check_24 = ((CheckBox) findViewById(R.id.checkShoes)).getText().toString();
+//                check_25 = ((CheckBox) findViewById(R.id.checkSkinC)).getText().toString();
+//                check_26 = ((CheckBox) findViewById(R.id.checkSports)).getText().toString();
+//                check_27 = ((CheckBox) findViewById(R.id.checkTires)).getText().toString();
+//                check_28 = ((CheckBox) findViewById(R.id.checkVeggie)).getText().toString();
+//                check_29 = ((CheckBox) findViewById(R.id.checkVideoG)).getText().toString();
+//                check_30 = ((CheckBox) findViewById(R.id.checkWomen)).getText().toString();
 
 
-                //Define a HttpHandler
+                /*Define a HttpHandler*/
                 HttpHandler hconnection = new HttpHandler();
 
                 final JSONObject parmsPost = new JSONObject();
 
-                parmsPost.put("user", nameprod);
-                parmsPost.put("pass", descprod);
-                parmsPost.put("fname", price);
+                parmsPost.put("namep", nameprod);
+                parmsPost.put("decp", descprod);
+                parmsPost.put("pricep", priceprod);
+                parmsPost.put("dept", deptprod);
+                parmsPost.put("categ", categprod);
+
+                prf = getSharedPreferences("user_details",MODE_PRIVATE);
+                owner.compareTo("" +prf.getString("username", null));
+                parmsPost.put("owner", owner);
+
 //                if(!(check_0.equals(null) || check_6.equals(null) || check_13.equals(null) ||
 //                        check_21.equals(null) || check_22.equals(null) || check_29.equals(null))){
 //                    deptid = "ELEN123";
@@ -351,27 +391,48 @@ public class AddProduct extends AppCompatActivity {
 //                        parmsPost.put("cateid", categ);
 //                    }
 //                }
-                //parmsPost.put("cateid", categ);
+                /*//parmsPost.put("cateid", categ);
                 //String imageLocation = c.getString("photoURL");
                 //Create URL for each image
                 //String imageURL = "http://" + hostAddress + "/" + imageLocation;
-                //Download the actual image using the imageURL
-                //Drawable actualImage= LoadImageFromWebOperations(imageURL);
+                Download the actual image using the imageURL
+                //Drawable actualImage= LoadImageFromWebOperations(imageURL);*/
+                /**
+                 * Add the photo to Database
+                 */
+                //Bitmap bitmap;
+
                 addPhoto.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //parmsPost.put("photoURL", new File(ImageLink));
+                        FileOutputStream out;
+                        FileInputStream in;
+                        image = "imagesjson_miniebay";
+                        File filename = new File(getApplicationContext().getFilesDir(), image);
+                        try {
+                            out = openFileOutput(String.valueOf(filename), Context.MODE_PRIVATE);
+                            //in = get
+                            out.close();
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
-
+                addphoto = photo.toString();
+                parmsPost.put("image", addphoto);
+                //EDIT!!!
+                /**
+                 * Sending the data to database
+                 */
                 /*perform the authentication process and capture the result in serverResponse variable*/
-//                    serverResponse = hconnection.makeServiceCallPost2(url, userName, passWord, firstName, lastName, userTel, Email, Address);
-                serverResponse = hconnection.makeServiceCallPost3(url, nameprod, descprod, priceprod, categ, deptid);
+                serverResponse = hconnection.makeServiceCallPost3(url, nameprod, descprod, priceprod, deptprod, categprod, owner);
                 //Clean response
                 serverResponse=serverResponse.trim();
 
             } catch (JSONException e) {
-                e.printStackTrace();
+              e.printStackTrace();
             }
             return result;
         }
@@ -388,21 +449,24 @@ public class AddProduct extends AppCompatActivity {
             //Verify the authentication result
             // not: the user could not be authenticated
             if (!serverResponse.equals("not")) {
-                //The user has been authenticated
+                //The product has been authenticated
                 //Update local session variables
 //                SharedPreferences.Editor editor = prf.edit();
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AddProduct.this);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 //editor.putString(key, name);
 
+                //EDIT!!!
                 editor.putString("namep", nameprod);
                 editor.putString("decp", descprod);
                 editor.putString("pricep", priceprod);
+                editor.putString("dept", deptprod);
+                editor.putString("categ", categprod);
                 //editor.putString("lname", image);
-                String categid = "";
-                editor.putString("categ", categid);
-                String deptid = "";
-                editor.putString("deptid", deptid);
+                //String categid = "";
+                //editor.putString("categ", categid);
+                //String deptid = "";
+                //editor.putString("deptid", deptid);
                 editor.putString("sessionValue", serverResponse);
                 //editor.commit();
                 editor.apply();
@@ -446,12 +510,4 @@ public class AddProduct extends AppCompatActivity {
         }
     }
 
-    private class addPhotoOfItem extends AsyncTask<String, Void, String> {
-
-
-        @Override
-        protected String doInBackground(String... strings) {
-            return null;
-        }
-    }
 }

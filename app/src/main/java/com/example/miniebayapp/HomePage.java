@@ -219,8 +219,8 @@ public class HomePage extends AppCompatActivity {
                             String name = c.getString("Name");
                             String description = c.getString("Description");
                             String price = c.getString("Price");
-                            String department = c.getString("deptid");
-                            String category = c.getString("cateid");
+                            String department = c.getString("deptid"); //CHANGE TO DEPARTMENT NAME
+                            String category = c.getString("cateid"); //ELIMINATE
                             String imageLocation = c.getString("photoURL");
 
                             //Create URL for each image

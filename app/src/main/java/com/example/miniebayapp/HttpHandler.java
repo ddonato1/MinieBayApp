@@ -171,7 +171,7 @@ public class HttpHandler {
         return response;
     }
 
-    public String makeServiceCallPost3(String reqUrl, String Name, String Description, String Price, String cateid, String deptid) {
+    public String makeServiceCallPost3(String reqUrl, String Name, String Description, String Price, String cateid, String deptname, String owner) {
         // HTTP Response
         String response = null;
         try {
@@ -184,7 +184,7 @@ public class HttpHandler {
             conn.setRequestMethod("POST");
 
             //Define the parameters list
-            String parameters="namep="+Name+"&decp="+ Description +"&pricep="+Price+"&photoURL="+"&cateid="+cateid+"&deptid="+deptid;
+            String parameters="namep="+Name+"&decp="+ Description +"&pricep="+Price+"&photoURL="+"&dept="+deptname+"&cateid="+cateid+"&owner"+owner;
 
             //Establish the option for sending parameters using the POST method
             conn.setDoOutput(true);
