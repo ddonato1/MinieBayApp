@@ -54,11 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         register = (TextView) findViewById(R.id.registerTxtView);
 
-        /**
-         * EDIT!!!!!
-         */
-        pef = getSharedPreferences("logout",MODE_PRIVATE);
-        pef.getString("sessionValues",null);
+
 
         /*Create local session variables*/
         pref = getSharedPreferences("user_details", MODE_PRIVATE);
@@ -96,7 +92,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(ireg);
             }
         });
-
+/**
+ * EDIT!!!!!
+ */
+        pef = getSharedPreferences("logout",MODE_PRIVATE);
+        pef.getString("sessionValues",null);
     }
 
 

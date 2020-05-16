@@ -2,6 +2,8 @@ package com.example.miniebayapp;
 
 import android.graphics.drawable.DrawableWrapper;
 import android.util.Log;
+import android.widget.TextView;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -171,7 +173,7 @@ public class HttpHandler {
         return response;
     }
 
-    public String makeServiceCallPost3(String reqUrl, String Name, String Description, String Price, String cateid, String deptname, String owner) {
+    public String makeServiceCallPost3(String reqUrl, String Name, String Description, String Price, String photo, String deptname, String cateid, String owner) {
         // HTTP Response
         String response = null;
         try {
@@ -184,7 +186,7 @@ public class HttpHandler {
             conn.setRequestMethod("POST");
 
             //Define the parameters list
-            String parameters="namep="+Name+"&decp="+ Description +"&pricep="+Price+"&photoURL="+"&dept="+deptname+"&cateid="+cateid+"&owner"+owner;
+            String parameters="namep="+Name+"&decp="+ Description +"&pricep="+Price+"&photoURL="+photo+"&dept="+deptname+"&cateid="+cateid+"&owner="+owner;
 
             //Establish the option for sending parameters using the POST method
             conn.setDoOutput(true);
