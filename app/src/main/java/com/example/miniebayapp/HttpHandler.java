@@ -208,4 +208,40 @@ public class HttpHandler {
         }
         return response;
     }
+
+    public String makeServiceCallPost4(String reqUrl, String PriceBid, String username, String prodid, String owner) {
+        // HTTP Response
+        String response = null;
+        try {
+            //Generate a URL object from the requested URL
+            URL url = new URL(reqUrl);
+            // Create a Http Connection
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            // Define Request POST
+            conn.setRequestMethod("POST");
+
+            //Define the parameters list
+            String parameters="pricebid="+PriceBid+"&Owner="+owner+"&prodid="+prodid+"&username="+username;
+
+            //Establish the option for sending parameters using the POST method
+            conn.setDoOutput(true);
+            //Add the parameters list to the http request
+            conn.getOutputStream().write(parameters.getBytes("UTF-8"));
+
+            // read the response
+            InputStream in = new BufferedInputStream(conn.getInputStream());
+            // Convert the InputStream in a Spring
+            response = convertStreamToString(in);
+        } catch (MalformedURLException e) {
+            Log.e(TAG, "MalformedURLException: " + e.getMessage());
+        } catch (ProtocolException e) {
+            Log.e(TAG, "ProtocolException: " + e.getMessage());
+        } catch (IOException e) {
+            Log.e(TAG, "IOException: " + e.getMessage());
+        } catch (Exception e) {
+            Log.e(TAG, "Exception: " + e.getMessage());
+        }
+        return response;
+    }
 }

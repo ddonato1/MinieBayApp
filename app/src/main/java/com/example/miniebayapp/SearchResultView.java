@@ -13,5 +13,6 @@ public class SearchResultView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result_view);
 
+
     }
 }

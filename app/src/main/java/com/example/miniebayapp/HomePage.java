@@ -1,18 +1,33 @@
 package com.example.miniebayapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import static android.content.Context.MODE_PRIVATE;
 import android.annotation.SuppressLint;
+import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.app.Activity;
+
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -32,8 +47,10 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class HomePage extends AppCompatActivity {
     TextView usern;
@@ -58,7 +75,17 @@ public class HomePage extends AppCompatActivity {
 
     SharedPreferences prf, perf;
     Intent i;
-
+    SearchView searchItem;
+    CharSequence query, queryHint;
+    boolean isIconfied;
+    private ListView list;
+    ArrayList<String> adap;
+    ArrayAdapter<String> ap;
+//    private ListViewAdapter adp;
+//    ArrayList<listProducts> arrayList = new ArrayList<listProducts>();
+    SearchView search;
+    String[] deptL, deptList;
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,8 +97,52 @@ public class HomePage extends AppCompatActivity {
         saleBtn = (Button) findViewById(R.id.saleButton);
         cartBtn = (Button) findViewById(R.id.shopitemButton);
 
-//        Intent i = getIntent();
-//        username = i.getStringExtra("userName");
+//        SearchManager searchM = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        ComponentName compName = new ComponentName(HomePage.this, SearchResultView.class);
+//        search.setSearchableInfo(searchM.getSearchableInfo(compName));
+
+//        int position = 0;
+//        deptL.equals(itemUserList.get(position).department);
+//
+//        list = (ListView) findViewById(R.id.viewSearchList);
+//        for(int i=0; i < deptL.length; i++){
+//            listProducts dept = new listProducts(deptL[i]);
+//            arrayList.add(dept);
+//        }
+//
+//        adp = new ListViewAdapter(this, arrayList);
+//        list.setAdapter(adp);
+
+        search = (SearchView) findViewById(R.id.searchView);
+        list = (ListView) findViewById(R.id.viewSearchList);
+
+        adap = new ArrayList<String>();
+
+        adap.add("deptid");
+        ap = new ArrayAdapter<String>(HomePage.this, android.R.layout.simple_list_item_1, adap);
+
+       // adap.add("Name");
+        //ArrayList<String> arrayProd = new ArrayList<>();
+        //arrayProd.addAll(Arrays.asList(getResources().getStringArray(R.id.listOfMyProducts)));
+
+        //ap = new ArrayAdapter<String>(HomePage.this, android.R.layout.simple_list_item_1, arrayProd);
+
+        //list.setAdapter(ap);
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                list.setFilterText("" + s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                ap.getFilter().filter(s);
+                return false;
+            }
+        });
+
 
         usern = findViewById(R.id.usernameView);
 //        usern.setText("" + username);
@@ -153,7 +224,32 @@ public class HomePage extends AppCompatActivity {
                 shoppingcartBtnObject();
             }
         });
+
     }
+
+//    @SuppressLint("ResourceType")
+//    public boolean onCreateOptionMenu(Menu menu){
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.id.itemDepartment, menu);
+//        MenuItem it = menu.findItem(R.id.itemLists);
+//        SearchView sv = (SearchView) it.getActionView();
+//
+//        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String s) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String s) {
+//                ap.getFilter().filter(s);
+//                return false;
+//            }
+//        });
+//
+//        return super.onCreateOptionsMenu(menu);
+//    }
+
 
     /***
      *  This class is a thread for receiving and process data from the Web server
@@ -215,41 +311,23 @@ public class HomePage extends AppCompatActivity {
                     for (int i = 0; i < items.length(); i++) {
                         JSONObject c = items.getJSONObject(i);
                         JSONObject c1 = items1.getJSONObject(i);
-                            String ownerP = c1.getString("Owner");
                             String name = c.getString("Name");
                             String description = c.getString("Description");
                             String price = c.getString("Price");
-                            String department = c.getString("deptid"); //CHANGE TO DEPARTMENT NAME
-                            String category = c.getString("cateid"); //ELIMINATE
+                            String department = c.getString("deptid");
+                            String category = c.getString("cateid");
                             String imageLocation = c.getString("photoURL");
+                            String ownerP = c1.getString("Owner");
+                            String productID = c.getString("prodid");
+
+                            String path = "cpen410/Mini_eBay/imagesjson_miniebay";
 
                             //Create URL for each image
-                            String imageURL = "http://" + hostAddress + "/" + imageLocation;
+                            String imageURL = "http://" + hostAddress + "/" + path +"/"+ imageLocation;
                             //Download the actual image using the imageURL
                             Drawable actualImage= LoadImageFromWebOperations(imageURL);
 
-                            itemUserList.add(new userItem(actualImage, description, price, category, department, name, ownerP));
-
-
-//                        String name = c.getString("Name");
-//                        String description = c.getString("Description");
-//                        String price = c.getString("Price");
-//                        String department = c.getString("deptid");
-//                        String category = c.getString("cateid");
-//                        String imageLocation = c.getString("photoURL");
-//                        String departmentID = c.getString("deptid");
-//                        String namedtp = c.getString("Name");
-//                        String imageLocation = c.getString("image");
-
-//                        //Create URL for each image
-//                        String imageURL = "http://" + hostAddress + "/" + imageLocation;
-//                        //Download the actual image using the imageURL
-//                        Drawable actualImage= LoadImageFromWebOperations(imageURL);
-
-                        // Create an userItem object and add it to the items' list
-//                        itemUserList.add(new userItem(ownerP, name, description, department, category, price, actualImage));
-//                        itemUserList.add(new userItem(name, description, department, category, price, actualImage));
-//                        itemUserList.add(new userItem(departmentID, namedtp, actualImage));
+                            itemUserList.add(new userItem(actualImage, description, price, category, department, name, ownerP, productID));
                     }
                 } //Log any problem with received data
                 catch (final JSONException e) {
@@ -340,13 +418,14 @@ public class HomePage extends AppCompatActivity {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_items, parent, false);
             }
             // Lookup view for data population
-            TextView itemOwner = (TextView) convertView.findViewById(R.id.itemOwner);
-            TextView itemName = (TextView) convertView.findViewById(R.id.itemName);
-            TextView itemDesc = (TextView) convertView.findViewById(R.id.itemDescription);
-            TextView itemPrice = (TextView) convertView.findViewById(R.id.itemPrice);
-            TextView itemDept = (TextView) convertView.findViewById(R.id.itemDepartment);
-            TextView itemCate = (TextView) convertView.findViewById(R.id.itemCategory);
-            ImageView itemImage = (ImageView) convertView.findViewById(R.id.imageView);
+            final TextView itemOwner = (TextView) convertView.findViewById(R.id.itemOwner);
+            final TextView itemName = (TextView) convertView.findViewById(R.id.itemName);
+            final TextView itemDesc = (TextView) convertView.findViewById(R.id.itemDescription);
+            final TextView itemPrice = (TextView) convertView.findViewById(R.id.itemPrice);
+            final TextView itemDept = (TextView) convertView.findViewById(R.id.itemDepartment);
+            final TextView itemCate = (TextView) convertView.findViewById(R.id.itemCategory);
+            final TextView itemId = (TextView) convertView.findViewById(R.id.itemid);
+            final ImageView itemImage = (ImageView) convertView.findViewById(R.id.imageView);
 
             // Populate the data into the template view using the data object
             itemOwner.setText(user.owner);
@@ -356,6 +435,8 @@ public class HomePage extends AppCompatActivity {
             itemDept.setText(user.department);
             itemCate.setText(user.category);
             itemImage.setImageDrawable(user.image);
+            itemId.setText(user.productid);
+
 
             // Return the completed view to render on screen
             convertView.setTag(position);
@@ -371,29 +452,112 @@ public class HomePage extends AppCompatActivity {
                             "You have selected " + itemUserList.get(position).name,
                             Toast.LENGTH_LONG).show();
                     // Do what you want here...
+
+
+                    //String urlImagen = getResources().getString(itemImage[position]);
+//                    itemImage.setDrawingCacheEnabled(true);
+//                    Bitmap bitmap = itemImage.getDrawingCache();
                     Intent inT = new Intent(HomePage.this, ProductInfo.class);
-                    inT.putExtra("Item selected", String.valueOf(itemUserList.get(position)));
+                        inT.putExtra("Name", itemName.getText());
+                        inT.putExtra("Description", itemDesc.getText());
+                        inT.putExtra("Price", itemPrice.getText());
+                        inT.putExtra("deptid", itemDept.getText());
+                        inT.putExtra("cateid", itemCate.getText());
+                        inT.putExtra("Owner", itemOwner.getText());
+                        inT.putExtra("prodid", itemId.getText());
+//                        inT.putExtra("photoURL", itemImage.get);
                     startActivity(inT);
-
-//                    if(itemUserList.get(position).equals(0)) {
-//                        Intent inT = new Intent(HomePage.this, ProductInfo.class);
-//                        startActivity(inT);
-//                    }
-//                    else {
-//                        Intent inT = new Intent(HomePage.this, ProductInfo.class);
-//                        startActivity(inT);
-//                    }
-
                 }
             });
             return convertView;
         }
     }
 
+//    public static class listProducts {
+//        private static String deptProduct;
+//
+//        public listProducts(String deptProduct) {
+//            this.deptProduct = deptProduct;
+//        }
+//
+//        public String getDeptProduct() {
+//            return this.getDeptProduct();
+//        }
+//    }
+//
+//    public class ListViewAdapter extends BaseAdapter {
+//        Context contxt;
+//        LayoutInflater inflater;
+//        private List<listProducts> deptProduct = null;
+//        private ArrayList<listProducts> arrayList;
+//
+//        public ListViewAdapter(Context contxt, List<listProducts> deptProduct) {
+//               this.contxt = contxt;
+//               this.deptProduct = deptProduct;
+//               inflater = LayoutInflater.from(contxt);
+//               this.arrayList = new ArrayList<listProducts>();
+//               this.arrayList.addAll(deptProduct);
+//        }
+//
+//        public class ViewHolder {
+//            TextView deptid;
+//        }
+//
+//        @Override
+//        public int getCount() {
+//            return deptProduct.size();
+//        }
+//
+//        @Override
+//        public listProducts getItem(int pos) {
+//            return deptProduct.get(pos);
+//        }
+//
+//        @Override
+//        public long getItemId(int pos) {
+//            return pos;
+//        }
+//
+//        @Override
+//        public View getView(final int pos, View view, ViewGroup viewGroup) {
+//            final ViewHolder holder;
+//            if(view == null) {
+//                holder = new ViewHolder();
+//                view = inflater.inflate(R.layout.list_items3, null);
+//
+//                //find departments id and present them in the list view
+//                holder.deptid = (TextView) view.findViewById(R.id.itemDepartment);
+//                view.setTag(holder);
+//            }
+//            else {
+//                holder = (ViewHolder) view.getTag();
+//            }
+//            holder.deptid.setText(deptProduct.get(pos).getDeptProduct());
+//            return view;
+//        }
+//
+//        public void filter(String charTxt) {
+//            charTxt = charTxt.toLowerCase(Locale.getDefault());
+//            deptProduct.clear();
+//
+//            if(charTxt.length() == 0){
+//                deptProduct.addAll(arrayList);
+//            }
+//            else {
+//                for(listProducts wp : arrayList) {
+//                    if(wp.getDeptProduct().toLowerCase(Locale.getDefault()).contains(charTxt)) {
+//                        deptProduct.add(wp);
+//                    }
+//                }
+//            }
+//            notifyDataSetChanged();
+//        }
+//    }
+
     /**
      *  This class generates a Data structure for manipulating each Item in the application
      */
-    public class userItem {
+    public class userItem implements Serializable {
         public String owner;
         // Item's list
         public String name;
@@ -407,6 +571,7 @@ public class HomePage extends AppCompatActivity {
         public String category;
         // Item's image
         public Drawable image;
+        public String productid;
 
         /**
          *  Special constructor:
@@ -417,8 +582,9 @@ public class HomePage extends AppCompatActivity {
          * @param department
          * @param category
          * @param image : Item's image
+         * @param productid
          */
-        public userItem(Drawable image, String description, String price, String category, String department, String name, String owner) {
+        public userItem(Drawable image, String description, String price, String category, String department, String name, String owner, String productid) {
             this.owner = owner;
             this.name = name;
             this.description = description;
@@ -426,6 +592,7 @@ public class HomePage extends AppCompatActivity {
             this.department = department;
             this.category = category;
             this.image = image;
+            this.productid = productid;
         }
     }
 

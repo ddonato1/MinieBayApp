@@ -22,14 +22,23 @@
 
     <SearchView
         android:id="@+id/searchView"
-        android:layout_width="324dp"
-        android:layout_height="38dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         android:visibility="visible"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
     </SearchView>
+
+    <ListView
+        android:id="@+id/viewSearchList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
 
     <Button
         android:id="@+id/homeButton"
@@ -132,7 +141,7 @@
                 android:padding="10dp"
                 android:contentDescription="@string/app_name"
                 android:layout_alignParentTop="true"
-                android:id="@+id/imageView"
+                android:id="@+id/imageView1"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="16dp" />
 

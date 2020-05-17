@@ -54,12 +54,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomePage" />
+        <activity android:name=".HomePage"/>
         <activity android:name=".RegisterPage" />
-        <activity android:name=".SearchResultView">
+        <activity android:name=".SearchResultView"
+            android:launchMode="singleTop">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
+            <meta-data android:name="android:app.searchable"
+                android:resource="@id/searchView"/>
         </activity>
         <activity
             android:name=".ShoppingCartPage"

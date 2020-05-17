@@ -134,14 +134,14 @@ public class AddProduct extends AppCompatActivity {
 
         owner = (EditText) findViewById(R.id.productOwner);
 
-        RequestQueue request = Volley.newRequestQueue(getContext());
+        //RequestQueue request = Volley.newRequestQueue(getContext());
 
-        addPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addPhotoOptions();
-            }
-        });
+//        addPhoto.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                addPhotoOptions();
+//            }
+//        });
 
         addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,48 +157,48 @@ public class AddProduct extends AppCompatActivity {
         hostAddress = "192.168.0.11:8088";
     }
 
-    private Context getContext() {
-        return getContext();
-    }
-
-    private void addPhotoOptions(){
-        final CharSequence[] options = {"Take photo", "Choose from Gallery", "Cancel"};
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Choose an option");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(options[i].equals("Take photo")){
-                    //method of camera
-                    Toast.makeText(getContext(), "Load camera", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    if(options[i].equals("Choose from Gallery")){
-                        //method gallery
-                        Intent inT = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        inT.setType("image/");
-                        startActivityForResult(inT.createChooser(inT, "Choose"), COD_SELECTION);
-                    }
-                    else{
-                        dialogInterface.dismiss();
-                    }
-                }
-            }
-        });
-        builder.show();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch (resultCode){
-            case COD_SELECTION:
-                Uri mypath = data.getData();
-                photo.setImageURI(mypath);
-                break;
-        }
-    }
+//    private Context getContext() {
+//        return getContext();
+//    }
+//
+//    private void addPhotoOptions(){
+//        final CharSequence[] options = {"Take photo", "Choose from Gallery", "Cancel"};
+//        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//        builder.setTitle("Choose an option");
+//        builder.setItems(options, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                if(options[i].equals("Take photo")){
+//                    //method of camera
+//                    Toast.makeText(getContext(), "Load camera", Toast.LENGTH_SHORT).show();
+//                }
+//                else{
+//                    if(options[i].equals("Choose from Gallery")){
+//                        //method gallery
+//                        Intent inT = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                        inT.setType("image/");
+//                        startActivityForResult(inT.createChooser(inT, "Choose"), COD_SELECTION);
+//                    }
+//                    else{
+//                        dialogInterface.dismiss();
+//                    }
+//                }
+//            }
+//        });
+//        builder.show();
+//    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        switch (resultCode){
+//            case COD_SELECTION:
+//                Uri mypath = data.getData();
+//                photo.setImageURI(mypath);
+//                break;
+//        }
+//    }
 
     private class postItems extends AsyncTask<Void, Void, String> {
         ProgressDialog dialogProg;
@@ -247,7 +247,7 @@ public class AddProduct extends AppCompatActivity {
                 deptprod = ((MultiAutoCompleteTextView) findViewById(R.id.deptText)).getText().toString();
                 categprod = ((MultiAutoCompleteTextView) findViewById(R.id.categText)).getText().toString();
                 Owner = ((EditText) findViewById(R.id.productOwner)).getText().toString();
-                //Photo = ((ImageView) findViewById(R.id.photoView)).getText().toString();
+                //addphoto = ((ImageView) findViewById(R.id.photoView)).getText().toString();
 
 
                 /*Define a HttpHandler*/
@@ -261,37 +261,6 @@ public class AddProduct extends AppCompatActivity {
                 parmsPost.put("dept", deptprod);
                 parmsPost.put("cateid", categprod);
                 parmsPost.put("owner", Owner);
-
-                /*//parmsPost.put("cateid", categ);
-                //String imageLocation = c.getString("photoURL");
-                //Create URL for each image
-                //String imageURL = "http://" + hostAddress + "/" + imageLocation;
-                Download the actual image using the imageURL
-                //Drawable actualImage= LoadImageFromWebOperations(imageURL);*/
-                /**
-                 * Add the photo to Database
-                 */
-                addPhoto.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-
-//                        FileOutputStream out;
-//                        FileInputStream in;
-//                        image = "imagesjson_miniebay";
-//                        File filename = new File(getApplicationContext().getFilesDir(), image);
-//                        try {
-//                            out = openFileOutput(String.valueOf(filename), Context.MODE_PRIVATE);
-//                            //in = get
-//                            out.close();
-//                        } catch (FileNotFoundException e) {
-//                            e.printStackTrace();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-                    }
-                });
-//                addphoto = photo.toString();
                 parmsPost.put("photoURL", addphoto);
 
                 //EDIT!!!
@@ -378,6 +347,5 @@ public class AddProduct extends AppCompatActivity {
             }
         }
     }
-
 
 }
