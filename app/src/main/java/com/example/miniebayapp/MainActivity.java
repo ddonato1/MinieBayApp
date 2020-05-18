@@ -1,14 +1,20 @@
+/**
+ * Angel J. Vargas Lopez - S01274152
+ * Deyaneira Donato Carrasquillo - S01183053
+ * **
+ * Main Activity, this activity is the login page where the user can enter by his/her username and
+ * password. If the user don't have an account there is a link where he/she can enter the necessary
+ * data and it will proceed to login.
+ **/
 package com.example.miniebayapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import static android.content.Context.MODE_PRIVATE;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Telephony;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.View;
@@ -24,13 +30,10 @@ public class MainActivity extends AppCompatActivity {
 
     //Host address
     protected String hostAddress="192.168.0.11:8088";
-//    //Shared object though the application
-//    SharedPreferences pref2;
     //Authentication Servlet name
     protected String servletName = "sessionServlet";
     //Server default response
     String serverResponse="not";
-
 
     //String variables
     String userName;
@@ -53,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
         btnlogin = (Button) findViewById(R.id.loginButton);
 
         register = (TextView) findViewById(R.id.registerTxtView);
-
-
 
         /*Create local session variables*/
         pref = getSharedPreferences("user_details", MODE_PRIVATE);
@@ -92,9 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(ireg);
             }
         });
-/**
- * EDIT!!!!!
- */
+
         pef = getSharedPreferences("logout",MODE_PRIVATE);
         pef.getString("sessionValues",null);
     }

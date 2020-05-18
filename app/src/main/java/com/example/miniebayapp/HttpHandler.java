@@ -1,8 +1,13 @@
+/**
+ * Angel J. Vargas Lopez - S01274152
+ * Deyaneira Donato Carrasquillo - S01183053
+ * **
+ * Project HTTPHandler caller, this class helps to interact with the database
+ * by using the GET and POST communication.
+ **/
 package com.example.miniebayapp;
 
-import android.graphics.drawable.DrawableWrapper;
 import android.util.Log;
-import android.widget.TextView;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -13,8 +18,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-
-import javax.crypto.spec.DESedeKeySpec;
 
 public class HttpHandler {
     // This for debugging
@@ -29,7 +32,7 @@ public class HttpHandler {
 
     /***
      *  This method downloads the JSON data from a Request URL
-     *
+     *For the USERNAME and PASSWORD in login
      * @param reqUrl : Target URL
      * @return
      */
@@ -137,6 +140,12 @@ public class HttpHandler {
         return sb.toString();
     }
 
+    /***
+     *  This method downloads the JSON data from a Request URL
+     *For the User registration
+     * @param reqUrl : Target URL
+     * @return
+     */
     public String makeServiceCallPost2(String reqUrl, String userN, String passwd, String firstname, String lastname, String phonenum, String email, String add) {
         // HTTP Response
         String response = null;
@@ -173,6 +182,12 @@ public class HttpHandler {
         return response;
     }
 
+    /***
+     *  This method downloads the JSON data from a Request URL
+     *For the Product adding
+     * @param reqUrl : Target URL
+     * @return
+     */
     public String makeServiceCallPost3(String reqUrl, String Name, String Description, String Price, String photo, String deptname, String cateid, String owner) {
         // HTTP Response
         String response = null;
@@ -209,6 +224,12 @@ public class HttpHandler {
         return response;
     }
 
+    /***
+     *  This method downloads the JSON data from a Request URL
+     *For the Bid on a Product
+     * @param reqUrl : Target URL
+     * @return
+     */
     public String makeServiceCallPost4(String reqUrl, String PriceBid, String username, String prodid, String owner) {
         // HTTP Response
         String response = null;

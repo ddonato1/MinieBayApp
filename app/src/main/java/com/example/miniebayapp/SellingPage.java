@@ -1,3 +1,9 @@
+/**
+ * Angel J. Vargas Lopez - S01274152
+ * Deyaneira Donato Carrasquillo - S01183053
+ * **
+ * Selling Page Activity, this activity is where the user can add a product to the system.
+ **/
 package com.example.miniebayapp;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class SellingPage extends AppCompatActivity {
+    //Declare variables
     Button homeBtn;
     Button myEBAYbtn;
     Button notBtn;
@@ -33,6 +40,7 @@ public class SellingPage extends AppCompatActivity {
 
         Intent i = getIntent();
 
+        //Buttons do action on click listener
         homeBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -86,7 +94,7 @@ public class SellingPage extends AppCompatActivity {
 
 
     /**
-     *Methods
+     *Methods of buttons
      */
     public void homeBtnObject() {
         Intent i = new Intent(SellingPage.this, HomePage.class);

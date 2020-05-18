@@ -1,67 +1,42 @@
+/**
+ * Angel J. Vargas Lopez - S01274152
+ * Deyaneira Donato Carrasquillo - S01183053
+ * **
+ * Add Product Activity, this activity the user can add a product. Where he/she can add the product
+ * information and the price he/she wants.
+ **/
 package com.example.miniebayapp;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.Volley;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.acl.Owner;
-import java.util.HashMap;
 
 public class AddProduct extends AppCompatActivity {
-    private final String CARPET = "imagejson_miniebay/";
-    private final String IMAGE_RUT = CARPET + "myPhotos";
-    private static final int COD_SELECTION = 10;
-    private static final int COD_PHOTO = 20;
+    //Declare variables
+//    private final String CARPET = "cpen410/Mini_eBay/imagejson_miniebay/";
+//    private final String IMAGE_RUT = CARPET + "myPhotos";
+//    private static final int COD_SELECTION = 10;
+//    private static final int COD_PHOTO = 20;
     Button addPhoto;
     Button addProduct;
 
@@ -90,17 +65,14 @@ public class AddProduct extends AppCompatActivity {
     ProgressDialog prog;
     //This is for debugging
     private String TAG = HttpHandler.class.getSimpleName();
-    //This is for managing the listview in the activity
-    private ListView listv;
-    //Web server's IP address
     private String hostAddress;
     //Shared object though the application
     SharedPreferences prf;
     //Authentication Servlet name
     protected String servletN = "addproduct";
 
-    private static final int PERMISION_REQUEST = 1;
-    private static final int IMAGE_REQUEST = 2;
+//    private static final int PERMISION_REQUEST = 1;
+//    private static final int IMAGE_REQUEST = 2;
 
     TextView USERN;
     @Override
@@ -134,8 +106,6 @@ public class AddProduct extends AppCompatActivity {
 
         owner = (EditText) findViewById(R.id.productOwner);
 
-        //RequestQueue request = Volley.newRequestQueue(getContext());
-
 //        addPhoto.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -157,49 +127,9 @@ public class AddProduct extends AppCompatActivity {
         hostAddress = "192.168.0.11:8088";
     }
 
-//    private Context getContext() {
-//        return getContext();
-//    }
-//
-//    private void addPhotoOptions(){
-//        final CharSequence[] options = {"Take photo", "Choose from Gallery", "Cancel"};
-//        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-//        builder.setTitle("Choose an option");
-//        builder.setItems(options, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                if(options[i].equals("Take photo")){
-//                    //method of camera
-//                    Toast.makeText(getContext(), "Load camera", Toast.LENGTH_SHORT).show();
-//                }
-//                else{
-//                    if(options[i].equals("Choose from Gallery")){
-//                        //method gallery
-//                        Intent inT = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                        inT.setType("image/");
-//                        startActivityForResult(inT.createChooser(inT, "Choose"), COD_SELECTION);
-//                    }
-//                    else{
-//                        dialogInterface.dismiss();
-//                    }
-//                }
-//            }
-//        });
-//        builder.show();
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        switch (resultCode){
-//            case COD_SELECTION:
-//                Uri mypath = data.getData();
-//                photo.setImageURI(mypath);
-//                break;
-//        }
-//    }
-
+    /***
+     *  This class is a thread for sending and process data to the Web server
+     */
     private class postItems extends AsyncTask<Void, Void, String> {
         ProgressDialog dialogProg;
 
@@ -280,24 +210,15 @@ public class AddProduct extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-//            super.onPostExecute(result);
-//            dialogProg.dismiss();
-//            String rlt = result;
-//            Toast.makeText(activity,rlt,Toast.LENGTH_LONG);
-
             String msgToast;
 
             //Verify the authentication result
             // not: the user could not be authenticated
             if (!serverResponse.equals("not")) {
                 //The product has been authenticated
-                //Update local session variables
-//                SharedPreferences.Editor editor = prf.edit();
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AddProduct.this);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                //editor.putString(key, name);
 
-                //EDIT!!!
                 editor.putString("namep", nameprod);
                 editor.putString("decp", descprod);
                 editor.putString("pricep", priceprod);
@@ -309,10 +230,6 @@ public class AddProduct extends AppCompatActivity {
                 //editor.commit();
                 editor.apply();
                 msgToast= "Product added successfully!";
-                //Define the next activity
-//                Intent i = new Intent(RegisterPage.this, MainActivity.class);
-//                //call the DetailsActivity
-//                startActivity(i);
             }
             else {
                 ///The user could not been authenticated, destroy session variables

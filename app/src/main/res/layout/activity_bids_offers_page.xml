@@ -29,7 +29,8 @@
             android:layout_marginTop="46dp"
             android:layout_marginEnd="151dp"
             android:layout_marginRight="151dp"
-            android:text="Product Owner" />
+            android:text="Product Owner"
+            android:textSize="18sp"/>
         <TextView
             android:id="@+id/itemID"
             android:layout_width="90dp"
@@ -44,7 +45,8 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="151dp"
             android:layout_marginRight="151dp"
-            android:text="Product ID" />
+            android:text="Product ID"
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/itemPrice"
@@ -60,7 +62,8 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="151dp"
             android:layout_marginRight="151dp"
-            android:text="Price" />
+            android:text="Price"
+            android:textSize="18sp"/>
 
         <EditText
             android:id="@+id/bidPrice"

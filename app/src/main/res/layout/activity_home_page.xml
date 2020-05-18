@@ -33,12 +33,12 @@
         app:layout_constraintTop_toTopOf="parent">
     </SearchView>
 
-    <ListView
-        android:id="@+id/viewSearchList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<!--    <ListView-->
+<!--        android:id="@+id/viewSearchList"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
 
-    </ListView>
+<!--    </ListView>-->
 
     <Button
         android:id="@+id/homeButton"

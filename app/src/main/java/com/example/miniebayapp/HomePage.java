@@ -1,33 +1,29 @@
+/**
+ * Angel J. Vargas Lopez - S01274152
+ * Deyaneira Donato Carrasquillo - S01183053
+ * **
+ * Home Page Activity, this activity is the home page of the application shows all the products that
+ * the database have. Have a search bar, where the user can search for any department. As well, below
+ * of the page we have several buttons but the important one are the MyeBay and Selling. MyeBay is
+ * where the user can find its information and the logout button. Selling is where the user can add
+ * any product on his/her account.
+ **/
 package com.example.miniebayapp;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import static android.content.Context.MODE_PRIVATE;
 import android.annotation.SuppressLint;
 import android.app.SearchManager;
-import android.content.ComponentName;
+import android.app.SearchableInfo;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.app.Activity;
-
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -44,23 +40,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 
 public class HomePage extends AppCompatActivity {
+    //Declare Variables
     TextView usern;
-    String username;
-
     Button homeBtn;
     Button myEBAYbtn;
     Button notBtn;
     Button saleBtn;
     Button cartBtn;
+    String[] CATEGORIES = {"AUD2122", "BAE3233", "BEDR2526", "BID4647", "BOY3031", "CHEM3839", "COM2021", "DINR2627", "DOCT4546",
+            "FIS4748", "FLO3738", "FRU3536", "GEN4041", "GENQ2223", "GENT3334", "GIR3132", "HAI4445", "KIT2425",
+            "LIVR2324", "MAKU4243", "MEN2829", "MOV1920", "MUS1718", "SHO2930", "SKC4344", "SPO3435", "TIR3940",
+            "VEG3637", "VGA1819", "VITN4142", "WOM2728"};
+    String[] DEPARTMENTS = {"AUT213", "BEA145", "CLO789", "ELEC123", "GAR112", "HOME456", "PET516", "PHA134", "TOY101"};
 
     //This is for debugging
     private String TAG = HomePage.class.getSimpleName();
@@ -73,18 +67,9 @@ public class HomePage extends AppCompatActivity {
     // Item list for storing data from the web server
     private ArrayList<userItem> itemUserList;
 
-    SharedPreferences prf, perf;
-    Intent i;
+    SharedPreferences prf;
     SearchView searchItem;
-    CharSequence query, queryHint;
-    boolean isIconfied;
-    private ListView list;
-    ArrayList<String> adap;
-    ArrayAdapter<String> ap;
-//    private ListViewAdapter adp;
-//    ArrayList<listProducts> arrayList = new ArrayList<listProducts>();
-    SearchView search;
-    String[] deptL, deptList;
+
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,94 +82,42 @@ public class HomePage extends AppCompatActivity {
         saleBtn = (Button) findViewById(R.id.saleButton);
         cartBtn = (Button) findViewById(R.id.shopitemButton);
 
-//        SearchManager searchM = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        ComponentName compName = new ComponentName(HomePage.this, SearchResultView.class);
-//        search.setSearchableInfo(searchM.getSearchableInfo(compName));
+        SearchManager searchM = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchableInfo searchableInfo = searchM.getSearchableInfo(getComponentName());
 
-//        int position = 0;
-//        deptL.equals(itemUserList.get(position).department);
-//
-//        list = (ListView) findViewById(R.id.viewSearchList);
-//        for(int i=0; i < deptL.length; i++){
-//            listProducts dept = new listProducts(deptL[i]);
-//            arrayList.add(dept);
-//        }
-//
-//        adp = new ListViewAdapter(this, arrayList);
-//        list.setAdapter(adp);
+        searchItem = (SearchView) findViewById(R.id.searchView);
+        searchItem.setSearchableInfo(searchableInfo);
+        searchItem.setIconifiedByDefault(false);
+        searchItem.setSubmitButtonEnabled(true);
 
-        search = (SearchView) findViewById(R.id.searchView);
-        list = (ListView) findViewById(R.id.viewSearchList);
-
-        adap = new ArrayList<String>();
-
-        adap.add("deptid");
-        ap = new ArrayAdapter<String>(HomePage.this, android.R.layout.simple_list_item_1, adap);
-
-       // adap.add("Name");
-        //ArrayList<String> arrayProd = new ArrayList<>();
-        //arrayProd.addAll(Arrays.asList(getResources().getStringArray(R.id.listOfMyProducts)));
-
-        //ap = new ArrayAdapter<String>(HomePage.this, android.R.layout.simple_list_item_1, arrayProd);
-
-        //list.setAdapter(ap);
-
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        //Searching for any departments
+        searchItem.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                list.setFilterText("" + s);
-                return false;
+                Intent in = new Intent(HomePage.this, SearchResultView.class);
+                in.putExtra("", s);
+                startActivity(in);
+                return true;
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
-                ap.getFilter().filter(s);
+            public boolean onQueryTextChange(String stxt) {
                 return false;
             }
         });
 
-
         usern = findViewById(R.id.usernameView);
-//        usern.setText("" + username);
-
         //Access the local session variables
         prf = getSharedPreferences("user_details",MODE_PRIVATE);
         usern.setText("" +prf.getString("username", null));
         prf.getString("sessionValue", null);
 
-        /*Create local session variables*/
-//        perf = getSharedPreferences("user_det", MODE_PRIVATE);
-//        i = new Intent(HomePage.this, MyebayInfo.class);
-
-        //if(perf.contains("sessionValues")){
-            myEBAYbtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    myEBAYBtnObject();
-                }
-            });
-       // }
-//        //Verify for session variables
-//        if(perf.contains("sessionValue")) {
-//            //The user has log to the application
-//            userName = pref.getString("user", null);
-//            passwd = pref.getString("sessionValue", null);
-//
-//            //Authenticate credentials
-//            new GetItems(MainActivity.this).execute();
-//        }
-//        else {
-//            //The user has not been authenticated
-//            btnlogin.setOnClickListener(new View.OnClickListener(){
-//                @Override
-//                public void onClick(View v){
-//                    userName = username.getText().toString();
-//                    passwd = userpass.getText().toString();
-//
-//                    //Authenticate the user via webservices
-//                    new GetItems(MainActivity.this).execute();
-//                }
-//            });
+        myEBAYbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myEBAYBtnObject();
+            }
+        });
 
         // Define the web server's IP address
         hostAddress="192.168.0.11:8088";
@@ -197,6 +130,7 @@ public class HomePage extends AppCompatActivity {
         // Create and start the thread
         new GetItems(this).execute();
 
+        //Buttons located in the activity
         homeBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -226,30 +160,6 @@ public class HomePage extends AppCompatActivity {
         });
 
     }
-
-//    @SuppressLint("ResourceType")
-//    public boolean onCreateOptionMenu(Menu menu){
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.id.itemDepartment, menu);
-//        MenuItem it = menu.findItem(R.id.itemLists);
-//        SearchView sv = (SearchView) it.getActionView();
-//
-//        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String s) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String s) {
-//                ap.getFilter().filter(s);
-//                return false;
-//            }
-//        });
-//
-//        return super.onCreateOptionsMenu(menu);
-//    }
-
 
     /***
      *  This class is a thread for receiving and process data from the Web server
@@ -326,7 +236,7 @@ public class HomePage extends AppCompatActivity {
                             String imageURL = "http://" + hostAddress + "/" + path +"/"+ imageLocation;
                             //Download the actual image using the imageURL
                             Drawable actualImage= LoadImageFromWebOperations(imageURL);
-
+//                            imag = actualImage;
                             itemUserList.add(new userItem(actualImage, description, price, category, department, name, ownerP, productID));
                     }
                 } //Log any problem with received data
@@ -452,11 +362,6 @@ public class HomePage extends AppCompatActivity {
                             "You have selected " + itemUserList.get(position).name,
                             Toast.LENGTH_LONG).show();
                     // Do what you want here...
-
-
-                    //String urlImagen = getResources().getString(itemImage[position]);
-//                    itemImage.setDrawingCacheEnabled(true);
-//                    Bitmap bitmap = itemImage.getDrawingCache();
                     Intent inT = new Intent(HomePage.this, ProductInfo.class);
                         inT.putExtra("Name", itemName.getText());
                         inT.putExtra("Description", itemDesc.getText());
@@ -472,87 +377,6 @@ public class HomePage extends AppCompatActivity {
             return convertView;
         }
     }
-
-//    public static class listProducts {
-//        private static String deptProduct;
-//
-//        public listProducts(String deptProduct) {
-//            this.deptProduct = deptProduct;
-//        }
-//
-//        public String getDeptProduct() {
-//            return this.getDeptProduct();
-//        }
-//    }
-//
-//    public class ListViewAdapter extends BaseAdapter {
-//        Context contxt;
-//        LayoutInflater inflater;
-//        private List<listProducts> deptProduct = null;
-//        private ArrayList<listProducts> arrayList;
-//
-//        public ListViewAdapter(Context contxt, List<listProducts> deptProduct) {
-//               this.contxt = contxt;
-//               this.deptProduct = deptProduct;
-//               inflater = LayoutInflater.from(contxt);
-//               this.arrayList = new ArrayList<listProducts>();
-//               this.arrayList.addAll(deptProduct);
-//        }
-//
-//        public class ViewHolder {
-//            TextView deptid;
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return deptProduct.size();
-//        }
-//
-//        @Override
-//        public listProducts getItem(int pos) {
-//            return deptProduct.get(pos);
-//        }
-//
-//        @Override
-//        public long getItemId(int pos) {
-//            return pos;
-//        }
-//
-//        @Override
-//        public View getView(final int pos, View view, ViewGroup viewGroup) {
-//            final ViewHolder holder;
-//            if(view == null) {
-//                holder = new ViewHolder();
-//                view = inflater.inflate(R.layout.list_items3, null);
-//
-//                //find departments id and present them in the list view
-//                holder.deptid = (TextView) view.findViewById(R.id.itemDepartment);
-//                view.setTag(holder);
-//            }
-//            else {
-//                holder = (ViewHolder) view.getTag();
-//            }
-//            holder.deptid.setText(deptProduct.get(pos).getDeptProduct());
-//            return view;
-//        }
-//
-//        public void filter(String charTxt) {
-//            charTxt = charTxt.toLowerCase(Locale.getDefault());
-//            deptProduct.clear();
-//
-//            if(charTxt.length() == 0){
-//                deptProduct.addAll(arrayList);
-//            }
-//            else {
-//                for(listProducts wp : arrayList) {
-//                    if(wp.getDeptProduct().toLowerCase(Locale.getDefault()).contains(charTxt)) {
-//                        deptProduct.add(wp);
-//                    }
-//                }
-//            }
-//            notifyDataSetChanged();
-//        }
-//    }
 
     /**
      *  This class generates a Data structure for manipulating each Item in the application
@@ -597,7 +421,7 @@ public class HomePage extends AppCompatActivity {
     }
 
     /**
-     *Methods
+     *Methods for the buttons
      */
     public void homeBtnObject() {
         Intent i = new Intent(HomePage.this, HomePage.class);
@@ -623,5 +447,4 @@ public class HomePage extends AppCompatActivity {
         Intent i = new Intent(HomePage.this, ShoppingCartPage.class);
         startActivity(i);
     }
-
 }

@@ -43,7 +43,7 @@
         android:layout_marginTop="28dp"
         android:hint="Password"
         android:ems="10"
-        android:drawableLeft="@drawable/password_security"
+        android:drawableLeft="@drawable/pass"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

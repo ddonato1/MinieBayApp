@@ -7,4 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".SearchResultView">
 
+    <ListView
+        android:id="@+id/viewSearchList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+
+    <TextView
+        android:id="@+id/test"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="testing"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,39 +1,29 @@
+/**
+ * Angel J. Vargas Lopez - S01274152
+ * Deyaneira Donato Carrasquillo - S01183053
+ * **
+ * Register Activity, this activity is in charge to register any user on the database. Creating an
+ * authenticated account username and password for him/her.
+ **/
 package com.example.miniebayapp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.content.Intent;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
-import android.util.Patterns;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.net.URLConnection;
-import java.net.URLEncoder;
-import java.util.Iterator;
-import java.util.List;
-import java.util.regex.Pattern;
-
-//Se referencian las Clases necesarias para la conexión con el Servidor MySQL //CHANGE TO ENGLISH
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 
 public class RegisterPage extends AppCompatActivity {
@@ -101,6 +91,9 @@ public class RegisterPage extends AppCompatActivity {
         hostAddress = "192.168.0.11:8088";
     }
 
+    /***
+     *  This class is a thread for sending and process data to the Web server
+     */
     private class postItems extends AsyncTask<Void, Void, String> {
         ProgressDialog dialogProg;
 
@@ -162,8 +155,7 @@ public class RegisterPage extends AppCompatActivity {
                     parmsPost.put("add", add);
 
                     /*perform the authentication process and capture the result in serverResponse variable*/
-//                    serverResponse = hconnection.makeServiceCallPost2(url, userName, passWord, firstName, lastName, userTel, Email, Address);
-                serverResponse = hconnection.makeServiceCallPost2(url, userN, passwd, firstname, lastname, phonenum, email, add);
+                    serverResponse = hconnection.makeServiceCallPost2(url, userN, passwd, firstname, lastname, phonenum, email, add);
                     //Clean response
                     serverResponse=serverResponse.trim();
 
@@ -175,10 +167,6 @@ public class RegisterPage extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-//            super.onPostExecute(result);
-//            dialogProg.dismiss();
-//            String rlt = result;
-//            Toast.makeText(activity,rlt,Toast.LENGTH_LONG);
 
             String msgToast;
 
@@ -186,11 +174,8 @@ public class RegisterPage extends AppCompatActivity {
             // not: the user could not be authenticated
             if (!serverResponse.equals("not")) {
                 //The user has been authenticated
-                //Update local session variables
-//                SharedPreferences.Editor editor = prf.edit();
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(RegisterPage.this);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                //editor.putString(key, name);
 
                 editor.putString("user", userN);
                 editor.putString("pass", passwd);
@@ -203,10 +188,6 @@ public class RegisterPage extends AppCompatActivity {
                 //editor.commit();
                 editor.apply();
                 msgToast= "User added successfully!";
-                //Define the next activity
-//                Intent i = new Intent(RegisterPage.this, MainActivity.class);
-//                //call the DetailsActivity
-//                startActivity(i);
             }
             else {
                 ///The user could not been authenticated, destroy session variables

@@ -15,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ProductInfo"></activity>
+        <activity android:name=".ProductInfo"
+            android:parentActivityName=".HomePage">
+        </activity>
         <activity
             android:name=".EditProductPhoto"
             android:parentActivityName=".EditProduct" />
@@ -45,7 +47,9 @@
         <activity android:name=".HelpPage" />
         <activity android:name=".PaymentMethodPage" />
         <activity android:name=".PurchasesPage" />
-        <activity android:name=".BidsOffersPage" />
+        <activity android:name=".BidsOffersPage"
+            android:parentActivityName=".HomePage">
+        </activity>
         <activity android:name=".MyOrdersPage" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -54,16 +58,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomePage"/>
-        <activity android:name=".RegisterPage" />
-        <activity android:name=".SearchResultView"
-            android:launchMode="singleTop">
+        <activity android:name=".HomePage">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
-            <meta-data android:name="android:app.searchable"
-                android:resource="@id/searchView"/>
         </activity>
+        <activity android:name=".RegisterPage" />
+        <activity android:name=".SearchResultView"/>
         <activity
             android:name=".ShoppingCartPage"
             android:parentActivityName=".HomePage" />

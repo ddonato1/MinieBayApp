@@ -1,39 +1,32 @@
+/**
+ * Angel J. Vargas Lopez - S01274152
+ * Deyaneira Donato Carrasquillo - S01183053
+ * **
+ * Bids Offers Page Activity, this activity is to add a bid on the product selected. It will display
+ * the user that owns the product, the product ID and the current price of the product. The user most
+ * indicate the amount he/she wants to add on the product, as well, enter his/her username.
+ **/
 package com.example.miniebayapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.net.URL;
-import java.util.ArrayList;
-
 public class BidsOffersPage extends AppCompatActivity {
+    //Declare variables
     TextView priceP, ownerP, idP;
     TextView prodID;
     String price, owner, prod_id;
@@ -43,8 +36,6 @@ public class BidsOffersPage extends AppCompatActivity {
 
     //This is for debugging
     private String TAG = HttpHandler.class.getSimpleName();
-    //This is for managing the listview in the activity
-    private ListView listv;
     //Web server's IP address
     private String hostAddress;
     //Shared object though the application
@@ -52,15 +43,11 @@ public class BidsOffersPage extends AppCompatActivity {
     //Authentication Servlet name
     protected String servletN = "addbid";
 
-//    //Users adapter
-//    private UsersAdapter adapter;
-//    // Item list for storing data from the web server
-//    private ArrayList<userItem> itemUserList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bids_offers_page);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         priceP = (TextView) findViewById(R.id.itemPrice);
         bid = (EditText) findViewById(R.id.bidPrice);
@@ -92,15 +79,11 @@ public class BidsOffersPage extends AppCompatActivity {
 
         // Define the web server's IP address
         hostAddress = "192.168.0.11:8088";
-        //Instate the Item list
-        //itemUserList = new ArrayList<>();
-        // Defines the adapter: Receives the context (Current activity) and the Arraylist
-        //adapter = new UsersAdapter(this, itemUserList);
-        // Create a accessor to the ListView in the activity
-        listv = findViewById(R.id.itemLists);
-
     }
 
+    /***
+     *  This class is a thread for sending and process data to the Web server
+     */
     private class postItems extends AsyncTask<Void, Void, String> {
         ProgressDialog dialogProg;
 
@@ -148,56 +131,6 @@ public class BidsOffersPage extends AppCompatActivity {
 
                 /*Define a HttpHandler*/
                 HttpHandler hconnection = new HttpHandler();
-//                String url = "http://"+hostAddress+"/getdatabasejson1";
-//                // Download data from the web server using JSON;
-//                String jsonStr = hconnection.makeServiceCall(url);
-//                // Log download's results
-//                Log.e(TAG, "Response from url: " + jsonStr);
-//
-//                //The JSON data must contain an array of JSON objects
-//                if (jsonStr != null) {
-//                    try {
-//                        //Define a JSON object from the received data
-//                        JSONObject jsonObj = new JSONObject(jsonStr);
-//
-//                        // Getting JSON Array node
-//                        JSONArray items = jsonObj.getJSONArray("PRODUCT");
-//                        JSONArray items1 = jsonObj.getJSONArray("INFORMATION");
-//
-//                        // looping through All Items
-//                        for (int i = 0; i < items.length(); i++) {
-//                            JSONObject c = items.getJSONObject(i);
-//                            JSONObject c1 = items1.getJSONObject(i);
-//                            String price = c.getString("Price");
-//                            String pID = c.getString("prodid");
-//                            String ownerP = c1.getString("Owner");
-//
-//
-//                            itemUserList.add(new userItem(pID, price, ownerP));
-//                        }
-//                    } //Log any problem with received data
-//                    catch (final JSONException e) {
-//                        Log.e(TAG, "Json parsing error: " + e.getMessage());
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Toast.makeText(getApplicationContext(),
-//                                        "Json parsing error: " + e.getMessage(),
-//                                        Toast.LENGTH_LONG).show(); }
-//                        });
-//                    }
-//                } else {
-//                    Log.e(TAG, "Couldn't get json from server.");
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//
-//                            Toast.makeText(getApplicationContext(),
-//                                    "Couldn't get json from server. Check LogCat for possible errors!",
-//                                    Toast.LENGTH_LONG).show();
-//                        }
-//                    });
-//                }
 
                 final JSONObject parmsPost = new JSONObject();
 
@@ -206,8 +139,6 @@ public class BidsOffersPage extends AppCompatActivity {
                 parmsPost.put("prodid", prodid);
                 parmsPost.put("Owner", Owner);
 
-
-                //EDIT!!!
                 /**
                  * Sending the data to database
                  */
@@ -230,8 +161,6 @@ public class BidsOffersPage extends AppCompatActivity {
             // not: the user could not be authenticated
             if (!serverResponse.equals("not")) {
                 //The product has been authenticated
-                //Update local session variables
-//                SharedPreferences.Editor editor = prf.edit();
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(BidsOffersPage.this);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -243,10 +172,6 @@ public class BidsOffersPage extends AppCompatActivity {
                 //editor.commit();
                 editor.apply();
                 msgToast= "Bid added successfully!";
-                //Define the next activity
-//                Intent i = new Intent(RegisterPage.this, MainActivity.class);
-//                //call the DetailsActivity
-//                startActivity(i);
             }
             else {
                 ///The user could not been authenticated, destroy session variables
@@ -262,219 +187,4 @@ public class BidsOffersPage extends AppCompatActivity {
             }
         }
     }
-
-//    /***
-//     *  This class is a thread for receiving and process data from the Web server
-//     */
-//    class GetItems extends AsyncTask<Void, Void, Void> {
-//        // Context: every transaction in a Android application must be attached to a context
-//        private Activity activity;
-//
-//        private Drawable actualBaseImage;
-//
-//        /***
-//         * Special constructor: assigns the context to the thread
-//         *
-//         * @param activity: Context
-//         */
-//        //@Override
-//        protected GetItems(Activity activity) {
-//            this.activity = activity;
-//        }
-//
-//        /**
-//         *  on PreExecute method: runs after the constructor is called and before the thread runs
-//         */
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            Toast.makeText(BidsOffersPage.this, "Items list is downloading", Toast.LENGTH_LONG).show();
-//        }
-//
-//        /***
-//         *  Main thread
-//         * @param arg0
-//         * @return
-//         */
-//        protected Void doInBackground(Void... arg0) {
-//            //Create a HttpHandler object
-//            HttpHandler sh = new HttpHandler();
-//
-//            // Making a request to url and getting response
-//            String url = "http://"+hostAddress+"/getDataBaseJson";
-//
-//
-//            // Download data from the web server using JSON;
-//            String jsonStr = sh.makeServiceCall(url);
-//
-//            // Log download's results
-//            Log.e(TAG, "Response from url: " + jsonStr);
-//
-//            //The JSON data must contain an array of JSON objects
-//            if (jsonStr != null) {
-//                try {
-//                    //Define a JSON object from the received data
-//                    JSONObject jsonObj = new JSONObject(jsonStr);
-//
-//                    // Getting JSON Array node
-//                    JSONArray items = jsonObj.getJSONArray("PRODUCT");
-//                    JSONArray items1 = jsonObj.getJSONArray("INFORMATION");
-//
-//                    // looping through All Items
-//                    for (int i = 0; i < items.length(); i++) {
-//                        JSONObject c = items.getJSONObject(i);
-//                        JSONObject c1 = items1.getJSONObject(i);
-//                        String price = c.getString("Price");
-//                        String productID = c.getString("prodid");
-//                        String ownerP = c1.getString("Owner");
-//
-//
-//                        itemUserList.add(new userItem(productID, price, ownerP));
-//                    }
-//                } //Log any problem with received data
-//                catch (final JSONException e) {
-//                    Log.e(TAG, "Json parsing error: " + e.getMessage());
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Toast.makeText(getApplicationContext(),
-//                                    "Json parsing error: " + e.getMessage(),
-//                                    Toast.LENGTH_LONG).show(); }
-//                    });
-//                }
-//            } else {
-//                Log.e(TAG, "Couldn't get json from server.");
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        Toast.makeText(getApplicationContext(),
-//                                "Couldn't get json from server. Check LogCat for possible errors!",
-//                                Toast.LENGTH_LONG).show();
-//                    }
-//                });
-//            }
-//            return null;
-//        }
-//
-//        /***
-//         *  This method runs after thread completion
-//         *  Set up the List view using the ArrayAdapter
-//         *
-//         * @param result
-//         */
-//        protected void onPostExecute (Void result){
-//            super.onPostExecute(result);
-//            listv.setAdapter(adapter);
-//        }
-//
-//        /***
-//         *  This method downloads a image from a web server using an URL
-//         * @param url: Image URL
-//         * @return  d: android.graphics.drawable.Drawable;
-//         * */
-//        public Drawable LoadImageFromWebOperations(String url) {
-//            try {
-//                //Request the image to the web server
-//                InputStream is = (InputStream) new URL(url).getContent();
-//
-//                //Generates an android.graphics.drawable.Drawable object
-//                Drawable d = Drawable.createFromStream(is, "src name");
-//
-//                return d; }
-//            catch (Exception e) {
-//                return null;
-//            }
-//        }
-//    }
-//
-//    /**
-//     * This class defines a ArrayAdapter for the ListView manipulation
-//     */
-//    public class UsersAdapter extends ArrayAdapter<userItem> {
-//
-//        /**
-//         *  Constructor:
-//         * @param context: Activity
-//         * @param users: ArrayList for storing Items list
-//         */
-//        public UsersAdapter(Context context, ArrayList<userItem> users) {
-//            super(context, 0, users);
-//        }
-//
-//        /***
-//         *  This method generates a view for manipulating the item list
-//         *  This method is called from the ListView.
-//         *
-//         * @param position: Item's position in the ArrayList
-//         * @param convertView:
-//         * @param parent
-//         * @return
-//         */
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            // Get the data item for this position
-//            userItem user = getItem(position);
-//            // Check if an existing view is being reused, otherwise inflate the view
-//            if (convertView == null) {
-//                convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_items3, parent, false);
-//            }
-//            // Lookup view for data population
-//            final TextView itemOwner = (TextView) convertView.findViewById(R.id.itemOwner);
-//            final TextView itemId = (TextView) convertView.findViewById(R.id.itemid);
-//            final TextView itemPrice = (TextView) convertView.findViewById(R.id.itemPrice);
-//
-//            // Populate the data into the template view using the data object
-//            itemOwner.setText(user.owner);
-//            itemId.setText(user.productid);
-//            itemPrice.setText(user.price);
-//
-//
-//            // Return the completed view to render on screen
-//            convertView.setTag(position);
-////
-////            //Create Listener to detect a click
-////            convertView.setOnClickListener(new View.OnClickListener() {
-////                @Override
-////                public void onClick(View view) {
-////                    int position = (Integer) view.getTag();
-////
-////                    // Show data of the clicked item
-////                    Toast.makeText(getApplicationContext(),
-////                            "You have selected " + itemUserList.get(position).name,
-////                            Toast.LENGTH_LONG).show();
-////                    // Do what you want here...
-////                    Intent inT = new Intent(BidsOffersPage.this, BidsOffersPage.class);
-////                    inT.putExtra("Description", itemDesc.getText());
-////                    inT.putExtra("Price", itemPrice.getText());
-////                    inT.putExtra("Owner", itemOwner.getText());
-////                    startActivity(inT);
-////                }
-////            });
-//            return convertView;
-//        }
-//    }
-//
-//    /**
-//     *  This class generates a Data structure for manipulating each Item in the application
-//     */
-//    public class userItem implements Serializable {
-//        public String owner;
-//        // Item's list
-//        public String productid;
-//        // Item's price
-//        public String price;
-//
-//        /**
-//         *  Special constructor:
-//         * @param owner
-//         * @param productid
-//         * @param price
-//         */
-//        public userItem(String productid, String price, String owner) {
-//            this.owner = owner;
-//            this.productid = productid;
-//            this.price = price;
-//
-//        }
-//    }
 }
